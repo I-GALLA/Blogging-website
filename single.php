@@ -43,6 +43,14 @@
                             $post_detail = $post['post_detail'];
                             
                             $post_author = $post['post_author'];
+
+                            //implementation des nb vues de posts
+                            $sql1 = "UPDATE posts SET post_views = post_views + 1 WHERE post_id =  :id";
+                            $stmt = $pdo->prepare($sql1);
+                            $stmt->execute([
+                             ':id' => $post_id
+                            ]);
+
                         } else {
                             // si pas de id dans url redirection à la page d'accueil
                             header("Location: index.php");
