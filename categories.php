@@ -33,10 +33,13 @@
 
         <h1 class="page-header-title">Catégorie <?php echo $_GET['category_name'];?> </h1>
         <p class="page-header-text mb-5">Recherchez-vous du contenu que vous n'avez pas encore trouvé? <br> Essayez de chercher dans le champ de recherche ci-dessous!</p>
-        <form class="page-header-signup mb-2 mb-md-0">
+        <form class="page-header-signup mb-2 mb-md-0" action="category-search.php" method="POST">
          <div class="form-row justify-content-center">
           <div class="col-lg-6 col-md-8">
-           <div class="form-group mr-0 mr-lg-2"><input class="form-control form-control-solid rounded-pill" type="text" placeholder="Search keyword..." /></div>
+           <div class="form-group mr-0 mr-lg-2">
+             <input name="search-keyword" class="form-control form-control-solid rounded-pill" type="text" placeholder="Search keyword..." />
+             <input name="category-id" value="<?php echo $_GET['category_id'] ?>" type="hidden" />
+            </div>
           </div>
           <div class="col-lg-3 col-md-4"><button class="btn btn-teal btn-block btn-marketing rounded-pill" type="submit">Search</button></div>
          </div>
