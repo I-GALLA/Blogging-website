@@ -1,3 +1,5 @@
+<?php session_start();?>
+<?php ob_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -10,3 +12,12 @@
         <script data-search-pseudo-elements defer src="js/all.min.js"></script>
         <script src="js/feather.min.js"></script>
     </head>
+
+<?php
+    if(isset($_SESSION['login']) && $_SESSION['user_role'] == 'admin'){
+        // it's ok
+    } else {
+        header("location: ../index.php");
+    }
+
+?>
