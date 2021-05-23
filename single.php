@@ -95,7 +95,7 @@
        <div class="card-header d-flex justify-content-between">
         <div class="mr-2 text-dark">
          John Doe
-         <div class="text-xs text-muted">November 19, 2020 at 11:31 PM</div>
+         <div class="text-xs text-muted">November 19, 2021 at 11:31 PM</div>
         </div>
         <div class="h5"><span class="badge badge-warning-soft text-warning font-weight-normal">Awaiting Response</span></div>
        </div>
@@ -131,7 +131,7 @@
    <div class="container">
     <hr class="my-1" />
     <div class="row align-items-center">
-     <div class="col-md-6 small">Copyright &#xA9; Your Website 2020</div>
+     <div class="col-md-6 small">Copyright &#xA9; AMDI4 2021</div>
      <div class="col-md-6 text-md-right small">
       <a href="privacy-policy.php">Mentions légales</a>
       &#xB7;

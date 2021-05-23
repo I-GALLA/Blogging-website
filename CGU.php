@@ -65,7 +65,7 @@
    <div class="container">
     <hr class="my-1" />
     <div class="row align-items-center">
-     <div class="col-md-6 small">Copyright &#xA9; Your Website 2020</div>
+     <div class="col-md-6 small">Copyright &#xA9; AMDI4 2021</div>
      <div class="col-md-6 text-md-right small">
       <a href="privacy-policy.php">Mentions légales</a>
       &#xB7;
