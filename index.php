@@ -25,7 +25,7 @@
       </ul>
       <?php
         if(isset($_SESSION['login'])){ ?>
-          <form action="index.php">
+          <form action="signout.php">
             <button class="btn-teal btn rounded-pill px-4 ml-lg-4"> Sign out (<?php echo $_SESSION['user_name'] ;?>)</button>
 
           </form>
