@@ -30,7 +30,7 @@
 
    <?php
    if (isset($_POST['search-keyword'])) {
-    $url = "http://localhost/amdi/search.php?key=" . $_POST['search-keyword'];
+    $url = "./amdi/search.php?key=" . $_POST['search-keyword'];
     header("Location: {$url}");
    }
    ?>

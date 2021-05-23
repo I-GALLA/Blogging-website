@@ -16,7 +16,7 @@
   <?php
   if (isset($_POST['edit-user'])) {
    $user_id = $_POST['user-id'];
-   $url = "http://localhost/amdi/backend/user-update.php?user_id=" . $user_id;
+   $url = "./backend/user-update.php?user_id=" . $user_id;
    header("Location: {$url}");
   }
 

@@ -16,7 +16,7 @@
   <?php
   if (isset($_POST['edit-post'])) {
    $post_id = $_POST['post-id'];
-   $url = "http://localhost/amdi/backend/edit-post.php?post_id=" . $post_id;
+   $url = "./amdi/backend/edit-post.php?post_id=" . $post_id;
    header("Location: {$url}");
   }
   ?>
