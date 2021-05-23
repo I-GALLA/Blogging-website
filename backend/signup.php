@@ -27,6 +27,17 @@
      $nick_name = trim($_POST['nick-name']);
 
      $email = trim($_POST['email-address']);
+     $sql1 = "SELECT * FROM users WHERE user_email = :email";
+     $stmt1 = $pdo->prepare($sql1);
+     $stmt1->execute([
+         ':email' => $email
+     ]);
+     $countEmail = $stmt1->rowCount();
+     if($countEmail != 0){
+         $error_email_exist = "Email alreday exist !";
+     }
+
+
      $password = trim($_POST['password']);
      $confirm_password = trim($_POST['confirm-password']);
      if ($password != $confirm_password) {
@@ -59,7 +70,10 @@
         <div class="card-body">
          <form action="signup.php" method="POST">
           <?php
-          if (isset($error)) {
+          if(isset($error_email_exist)){
+            echo "<p class='alert alert-danger'>{$error_email_exist}</p>";
+          }
+          else if (isset($error)) {
            echo "<p class='alert alert-danger'>{$error}</p>";
           } else if(isset($success)){
               echo "<p class='alert alert-success'>Account created successfully .. <a href='signin.php'>Sign in now !</a></p>";
