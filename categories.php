@@ -179,7 +179,7 @@
       ?>
 
        <div class="col-md-6 col-xl-4 mb-5">
-        <a class="card post-preview lift h-100" href="single.php?post_id=<?php echo $post_id; ?>"><img class="card-img-top" src="./img/<?php echo $post_image; ?>" alt="<?php echo $post_image; ?>" />
+        <a class="card post-preview lift h-100" href="single.php?post_id=<?php echo $post_id; ?>"><img class="card-img-top" width="316" height="200" src="./img/<?php echo $post_image; ?>" alt="<?php echo $post_image; ?>" />
          <div class="card-body">
           <h5 class="card-title"><?php echo $post_title; ?></h5>
           <p class="card-text"><?php echo $post_detail; ?></p>
@@ -276,7 +276,7 @@
        $post_views = $posts['post_views']; ?>
 
        <div class="col-md-6 col-xl-4 mb-5">
-        <a class="card post-preview lift h-100" href="single.php?post_id=<?php echo $post_id; ?>"><img class="card-img-top" src="./img/<?php echo $post_image; ?>" alt="<?php echo $post_image; ?>" />
+        <a class="card post-preview lift h-100" href="single.php?post_id=<?php echo $post_id; ?>"><img class="card-img-top" width="316" height="200" src="./img/<?php echo $post_image; ?>" alt="<?php echo $post_image; ?>" />
          <div class="card-body">
           <h5 class="card-title"><?php echo $post_title; ?></h5>
           <p class="card-text"><?php echo $post_detail; ?></p>
