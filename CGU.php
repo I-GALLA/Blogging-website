@@ -29,8 +29,7 @@
      <div class="container text-center">
       <div class="row justify-content-center">
        <div class="col-lg-8">
-        <h1 class="page-header-title mb-3">Post Title</h1>
-        <p class="page-header-text">Date, category, time</p>
+        <h1 class="page-header-title mb-3">CGU</h1>
        </div>
       </div>
      </div>
@@ -43,11 +42,13 @@
    <section class="bg-white py-10">
     <div class="container">
      <div>
-      <h1>This is a basic content page.</h1>
-      <p class="lead">You can use this page as a starting point to create your own custom pages, or choose an already built example page to start development!</p>
-      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Qui quisquam animi temporibus ipsum iusto necessitatibus laudantium beatae. Eligendi dolorum laudantium numquam? Officiis nemo error animi aliquam dolor consequatur ducimus unde.</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui repellat magni eaque beatae explicabo fugit placeat earum, dolores quaerat aperiam vero adipisci quidem minus officiis blanditiis unde? Incidunt, ea ad.</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis sed illum soluta, quaerat et deleniti magnam laudantium, non omnis numquam quos placeat. Porro autem consectetur dolor minima voluptatum modi maiores.</p>
+      <h1>Conditions générales d'utilisation du blog</h1>
+      <p class="lead">Propriété intellectuelle</p>
+      <p>Les marques, logos, signes et tout autre contenu du site font l'objet d'une protection par le Code de la propriété intellectuelle et plus particulièrement par le droit d'auteur.</p>
+      <p>L'Utilisateur sollicite l'autorisation préalable du site pour toute reproduction, publication, copie des différents contenus.</p>
+      <p>L'Utilisateur s'engage à une utilisation des contenus du site dans un cadre strictement privé. Une utilisation des contenus à des fins commerciales est strictement interdite.</p>
+      <p>Tout contenu mis en ligne par l'Utilisateur est de sa seule responsabilité. L'Utilisateur s'engage à ne pas mettre en ligne de contenus pouvant porter atteinte aux intérêts de tierces personnes. Tout recours en justice engagé par un tiers lésé contre le site sera pris en charge par l'Utilisateur.</p>
+      <p>Le contenu de l'Utilisateur peut être à tout moment et pour n'importe quelle raison supprimé ou modifié par le site. L'Utilisateur ne reçoit aucune justification et notification préalablement à la suppression ou à la modification du contenu Utilisateur.</p>
      </div>
 
     </div>
