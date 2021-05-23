@@ -1,13 +1,13 @@
-<?php $current_page = "Détail post"; ?>
-
+<?php $current_page = "Post detail"; ?>
 <?php require_once("./includes/header.php"); ?>
+
 <div id="layoutDefault">
  <div id="layoutDefault_content">
   <main>
 
    <nav class="navbar navbar-marketing navbar-expand-lg bg-white navbar-light">
     <div class="container">
-     <a class="navbar-brand text-dark" href="index.php">techno</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><img src="img/menu.png" style="height:20px;width:25px" /><i data-feather="menu"></i></button>
+     <a class="navbar-brand text-dark" href="index.php">AMDI BLOG</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><img src="img/menu.png" style="height:20px;width:25px" /><i data-feather="menu"></i></button>
      <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto mr-lg-5">
        <li class="nav-item">
@@ -20,8 +20,10 @@
         <a class="nav-link" href="about.php">About</a>
        </li>
       </ul>
-      <a class="btn-teal btn rounded-pill px-4 ml-lg-4" href="backend/signin.php">Sign in<i class="fas fa-arrow-right ml-1"></i></a>
-      <a class="btn-teal btn rounded-pill px-4 ml-lg-4" href="backend/signup.php">Sign up<i class="fas fa-arrow-right ml-1"></i></a>
+      <?php
+      $curr_page = basename(__FILE__) . '?post_id=' . $_GET['post_id'];
+      require_once("./includes/registration.php");
+      ?>
      </div>
     </div>
    </nav>
@@ -36,27 +38,31 @@
     ]);
     $post = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $stmt->rowCount();
-    // si id dans url n'exsite pas redirection page d'accueil
     if ($count == 0) {
      header("Location: index.php");
     }
     $post_title = $post['post_title'];
-    $post_category = $post['post_category'];
-    $post_detail = $post['post_detail'];
 
+    $post_category_id = $post['post_category_id'];
+    $sql = "SELECT * FROM categories WHERE category_id = :id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+     ':id' => $post_category_id
+    ]);
+    $category = $stmt->fetch(PDO::FETCH_ASSOC);
+    $post_category = $category['category_name'];
+
+    $post_detail = $post['post_detail'];
     $post_author = $post['post_author'];
 
-    //implementation des nb vues de posts
-    $sql1 = "UPDATE posts SET post_views = post_views + 1 WHERE post_id =  :id";
+    $sql1 = "UPDATE posts SET post_views = post_views + 1 WHERE post_id = :id";
     $stmt = $pdo->prepare($sql1);
     $stmt->execute([
      ':id' => $post_id
     ]);
    } else {
-    // si pas de id dans url redirection à la page d'accueil
     header("Location: index.php");
    }
-
    ?>
 
    <header class="page-header page-header-dark bg-gradient-primary-to-secondary">
@@ -66,8 +72,8 @@
        <div class="col-lg-8">
         <h1 class="page-header-title mb-3"><?php echo $post_title; ?></h1>
         <p class="page-header-text">
-         Catégorie: <?php echo $post_category; ?>,
-         Publié par: <?php echo $post_author; ?>
+         Category: <?php echo $post_category; ?>,
+         Posted by: <?php echo $post_author; ?>
         </p>
        </div>
       </div>
@@ -83,7 +89,9 @@
      <!--start post content-->
      <div>
       <h1><?php echo $post_title; ?></h1>
-      <p class="lead"><?php echo $post_detail; ?></p>
+      <p class="lead">
+       <?php echo $post_detail; ?>
+      </p>
      </div>
      <!--end post content-->
 
@@ -93,26 +101,120 @@
        <h2 class="mb-0">Comments</h2>
       </div>
       <hr class="mb-4" />
-      <div class="card mb-5">
-       <div class="card-header d-flex justify-content-between">
-        <div class="mr-2 text-dark">
-         John Doe
-         <div class="text-xs text-muted">November 19, 2021 at 11:31 PM</div>
-        </div>
-        <div class="h5"><span class="badge badge-warning-soft text-warning font-weight-normal">Awaiting Response</span></div>
-       </div>
-       <div class="card-body">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque blanditiis, exercitationem architecto accusamus quis repellendus magni nam ipsam id qui non itaque eos, consectetur maiores aperiam sapiente. Libero, possimus minus.
-       </div>
-      </div>
+      <?php
+      $sql = "SELECT * FROM comments WHERE com_post_id = :id";
+      $stmt = $pdo->prepare($sql);
+      $stmt->execute([
+       ':id' => $_GET['post_id']
+      ]);
+      $count = $stmt->rowCount();
+      if ($count == 0) {
+       echo "No comments";
+      } else {
+       $sql1 = "SELECT * FROM comments WHERE com_post_id = :id";
+       $stmt1 = $pdo->prepare($sql1);
+       $stmt1->execute([
+        ':id' => $_GET['post_id']
+       ]);
+       while ($comments = $stmt1->fetch(PDO::FETCH_ASSOC)) {
+        $user_name = $comments['com_user_name'];
+        $com_date = $comments['com_date'];
+        $com_detail = $comments['com_detail'];
+        $com_status = $comments['com_status'];
+        $com_user_id = $comments['com_user_id'];
+        // com status unpproved and com_user_id == singedInUserID
+        if (isset($_SESSION['user_id'])) {
+         $signed_in_user_id = $_SESSION['user_id'];
+        } else if (isset($_COOKIE['_uid_'])) {
+         $signed_in_user_id = base64_decode($_COOKIE['_uid_']);
+        } else {
+         $signed_in_user_id = -1;
+        }
 
-      <div class="card">
-       <div class="card-header">Add Comment</div>
-       <div class="card-body">
-        <textarea placeholder="Type here..." class="form-control mb-2" rows="4"></textarea>
-        <button class="btn btn-primary btn-sm mr-2">Post Comment</button>
+        if ($com_status == 'unapproved' && $com_user_id == $signed_in_user_id) { ?>
+         <div class="card mb-5">
+          <div class="card-header d-flex justify-content-between">
+           <div class="mr-2 text-dark">
+            <?php echo $user_name; ?>
+            <div class="text-xs text-muted"><?php echo $com_date; ?></div>
+           </div>
+           <div class="h5"><span class="badge badge-warning-soft text-warning font-weight-normal">Awaiting Response</span></div>
+          </div>
+          <div class="card-body">
+           <?php echo $com_detail; ?>
+          </div>
+         </div>
+        <?php } else if ($com_status == 'approved') { ?>
+         <div class="card mb-5">
+          <div class="card-header d-flex justify-content-between">
+           <div class="mr-2 text-dark">
+            <?php echo $user_name; ?>
+            <div class="text-xs text-muted"><?php echo $com_date; ?></div>
+           </div>
+          </div>
+          <div class="card-body">
+           <?php echo $com_detail; ?>
+          </div>
+         </div>
+        <?php }
+        ?>
+
+
+
+      <?php }
+      }
+      ?>
+
+      <?php
+      if (isset($_COOKIE['_uid_']) || isset($_COOKIE['_uiid_']) || isset($_SESSION['login'])) { ?>
+       <div class="card">
+        <div class="card-header">Add Comment</div>
+        <div class="card-body">
+         <?php
+         if (isset($_POST['submit'])) {
+          $comments = trim($_POST['comments']);
+          $sql = "INSERT INTO comments (com_post_id, com_detail, com_user_id, com_user_name, com_date, com_status) VALUES (:post_id, :com_detail, :user_id, :user_name, :com_date, :com_status)";
+          $stmt = $pdo->prepare($sql);
+
+          if (isset($_SESSION['user_id'])) {
+           $signed_in_user_id = $_SESSION['user_id'];
+          } else if (isset($_COOKIE['_uid_'])) {
+           $signed_in_user_id = base64_decode($_COOKIE['_uid_']);
+          } else {
+           $signed_in_user_id = -1;
+          }
+
+          $sql2 = "SELECT * FROM users WHERE user_id = :id";
+          $stmt2 = $pdo->prepare($sql2);
+          $stmt2->execute([
+           ':id' => $signed_in_user_id
+          ]);
+          $result = $stmt2->fetch(PDO::FETCH_ASSOC);
+          $user_name = $result['user_name'];
+
+          $stmt->execute([
+           ':post_id' => $_GET['post_id'],
+           ':com_detail' => $comments,
+           ':user_id' => $signed_in_user_id,
+           ':user_name' => $user_name,
+           ':com_date' => date("M n, Y") . ' at ' . date("h:i A"),
+           ':com_status' => 'unapproved'
+          ]);
+          header("Location: single.php?post_id={$_GET['post_id']}");
+         }
+         ?>
+         <form action="single.php?post_id=<?php echo $_GET['post_id']; ?>" method="POST">
+          <textarea name="comments" placeholder="Type here..." class="form-control mb-2" rows="4"></textarea>
+          <button type="submit" name="submit" class="btn btn-primary btn-sm mr-2">Post Comment</button>
+         </form>
+        </div>
        </div>
-      </div>
+      <?php } else {
+       echo "<a href='./backend/signin.php'>Sign in to comment</a>";
+      }
+      ?>
+
+
      </div>
      <!--end comment section end-->
     </div>
@@ -135,7 +237,7 @@
     <div class="row align-items-center">
      <div class="col-md-6 small">Copyright &#xA9; AMDI4 2021</div>
      <div class="col-md-6 text-md-right small">
-      <a href="privacy-policy.php">Mentions légales</a>
+      <a href="privacy-policy.php">Mentions Légales</a>
       &#xB7;
       <a href="CGU.php">CGU</a>
      </div>
@@ -144,4 +246,5 @@
   </footer>
  </div>
  <!--Footer end-->
+
  <?php require_once("./includes/footer.php"); ?>
