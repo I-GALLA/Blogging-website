@@ -92,9 +92,11 @@
      <hr />
      <?php
      // le post le plus populaire
-     $sql4 = "SELECT * FROM posts ORDER BY post_views DESC LIMIT 0,1";
+     $sql4 = "SELECT * FROM posts WHERE post_status = :status ORDER BY post_views DESC LIMIT 0,1";
      $stmt = $pdo->prepare($sql4);
-     $stmt->execute();
+     $stmt->execute([
+      ':status' => 'Publié',
+     ]);
      $post = $stmt->fetch(PDO::FETCH_ASSOC);
      $post_id = $post['post_id'];
      $post_title = $post['post_title'];
@@ -130,7 +132,7 @@
       </div>
      </a>
 
-     <h1>Recent posting:</h1>
+     <h1>Publications récentes:</h1>
      <hr />
      <div class="row">
       <!-- Début partie posts  -->
@@ -194,7 +196,7 @@
      </nav>
 
 
-     <h1 class="pt-5">Most viewed posts:</h1>
+     <h1 class="pt-5">Publications les plus consultés:</h1>
      <hr />
      <div class="row">
       <?php
