@@ -30,14 +30,15 @@
      if ($password != $confirm_password) {
       $error = "Password doesn't match";
      } else {
+      $hash = password_hash($password, PASSWORD_BCRYPT, ['cost'=>10]);
       $sql = "INSERT INTO users (user_name, user_email, user_password, user_photo, registered_on) VALUES (:name, :email, :password, :photo, :date)";
       $stmt = $pdo->prepare($sql);
       $stmt->execute([
        ':name' => $full_name,
        ':email' => $email,
-       ':password' => $password,
+       ':password' => $hash,
        ':photo' => 'default-logo.png',
-       ':date' => "20 nov 2020"
+       ':date' => date("M n, Y") . ' à '. date("h:i A")
       ]);
      }
     }
