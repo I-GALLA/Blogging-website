@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <?php $current_page = "Home"; ?>
 <?php require_once("./includes/header.php"); ?>
 
@@ -8,7 +7,7 @@
 
    <nav class="navbar navbar-marketing navbar-expand-lg bg-white  navbar-light">
     <div class="container">
-     <a class="navbar-brand text-dark" href="index.php">TechBarik</a>
+     <a class="navbar-brand text-dark" href="index.php">AMDI BLOG</a>
      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <img src="img/menu.png" style="height:20px;width:25px" /><i data-feather="menu"></i>
      </button>
@@ -24,36 +23,12 @@
         <a class="nav-link" href="about.php">About</a>
        </li>
       </ul>
+
       <?php
-      if (isset($_SESSION['login'])) { ?>
-       <form action="signout.php">
-        <button class="btn-teal btn rounded-pill px-4 ml-lg-4">Sign out (<?php echo $_SESSION['user_name']; ?>)</button>
-       </form>
-      <?php } else {
-       if (!isset($_COOKIE['_uid_']) && !isset($_COOKIE['_uiid_'])) {
-        echo '<a class="btn-teal btn rounded-pill px-4 ml-lg-4" href="backend/signin.php">Sign in</a>';
-        echo '<a class="btn-teal btn rounded-pill px-4 ml-lg-4" href="backend/signup.php">Sign up</a>';
-       } else {
-        $user_id = base64_decode($_COOKIE['_uid_']);
-        $user_nickname = base64_decode($_COOKIE['_uiid_']);
-        $sql = "SELECT * FROM users WHERE user_id = :id AND user_nickname = :nickname";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-         ':id' => $user_id,
-         ':nickname' => $user_nickname
-        ]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        $user_name = $user['user_name'];
-        $user_role = $user['user_role'];
-        echo "<form action='signout.php'>
-                <button class='btn-teal btn rounded-pill px-4 ml-lg-4'>Sign out ({$user_name})</button>
-               </form>";
-        $_SESSION['user_name'] = $user_nickname;
-        $_SESSION['user_role'] = $user_role;
-        $_SESSION['login'] = 'success';
-       }
-      }
+      $curr_page = basename(__FILE__);
+      require_once("./includes/registration.php");
       ?>
+
      </div>
     </div>
    </nav>
@@ -64,8 +39,8 @@
       <div class="row justify-content-center">
        <div class="col-xl-8 col-lg-10 text-center">
 
-        <h1 class="page-header-title">Bienvenue dans Techno Blog</h1>
-        <p class="page-header-text mb-5">Recherchez-vous du contenu que vous n'avez pas encore trouvé? <br> Essayez de chercher dans le champ de recherche ci-dessous!</p>
+        <h1 class="page-header-title">Welcome to AMDI BLOG</h1>
+        <p class="page-header-text mb-5">Are you searching for some content that you haven't found yet? Try searching in the search box below!</p>
         <form class="page-header-signup mb-2 mb-md-0" action="search.php" method="POST">
          <div class="form-row justify-content-center">
           <div class="col-lg-6 col-md-8">
@@ -120,7 +95,7 @@
    <section class="bg-white py-10">
     <!--Start-->
     <div class="container">
-     <h1>Publication la plus populaire:</h1>
+     <h1>Most popular post:</h1>
      <hr />
      <?php
      $sql4 = "SELECT * FROM posts WHERE post_status = :status ORDER BY post_views DESC LIMIT 0, 1";
@@ -151,7 +126,7 @@
          </div>
          <hr />
          <div class="post-preview-meta">
-          <img class="post-preview-meta-img" src="./img/mdabarik.jpg" />
+          <img class="post-preview-meta-img" src="./img/user_default_logo.png" />
           <div class="post-preview-meta-details">
            <div class="post-preview-meta-details-name"><?php echo $post_author; ?></div>
            <div class="post-preview-meta-details-date"><?php echo $post_date; ?></div>
@@ -162,11 +137,32 @@
       </div>
      </a>
 
-     <h1>Publications récentes:</h1>
+     <?php
+     $sql = "SELECT * FROM posts WHERE post_status = :status";
+     $stmt = $pdo->prepare($sql);
+     $stmt->execute([
+      ':status' => 'Published'
+     ]);
+     $post_count = $stmt->rowCount();
+     $post_per_page = 3;
+     if (isset($_GET['page'])) {
+      $page = $_GET['page'];
+      if ($page == 1) {
+       $page_id = 0;
+      } else {
+       $page_id = ($page * $post_per_page) - $post_per_page;
+      }
+     } else {
+      $page = 1;
+      $page_id = 0;
+     }
+     $total_pager = ceil($post_count / $post_per_page);
+     ?>
+     <h1>Recent posting:</h1>
      <hr />
      <div class="row">
       <?php
-      $sql = "SELECT * FROM posts WHERE post_status = :status ORDER BY post_id DESC LIMIT 0, 6";
+      $sql = "SELECT * FROM posts WHERE post_status = :status ORDER BY post_id DESC LIMIT $page_id, $post_per_page";
       $stmt = $pdo->prepare($sql);
       $stmt->execute([
        ':status' => 'Published'
@@ -189,7 +185,7 @@
          </div>
          <div class="card-footer d-flex align-items-center justify-content-between">
           <div class="post-preview-meta">
-           <img class="post-preview-meta-img" src="./img/mdabarik.jpg" />
+           <img class="post-preview-meta-img" src="./img/user_default_logo.png" />
            <div class="post-preview-meta-details">
             <div class="post-preview-meta-details-name"><?php echo $post_author; ?></div>
             <div class="post-preview-meta-details-date"><?php echo $post_date; ?></div>
@@ -207,23 +203,59 @@
 
      </div>
 
-     <nav aria-label="Page navigation example">
-      <ul class="pagination pagination-blog justify-content-center">
-       <li class="page-item disabled">
-        <a class="page-link" href="#!" aria-label="Previous"><span aria-hidden="true">&#xAB;</span></a>
-       </li>
-       <li class="page-item active"><a class="page-link" href="#!">1</a></li>
-       <li class="page-item"><a class="page-link" href="#!">2</a></li>
-       <li class="page-item"><a class="page-link" href="#!">3</a></li>
-       <li class="page-item"><a class="page-link" href="#!">12</a></li>
-       <li class="page-item">
-        <a class="page-link" href="#!" aria-label="Next"><span aria-hidden="true">&#xBB;</span></a>
-       </li>
-      </ul>
-     </nav>
+     <?php
+     if ($post_count > $post_per_page) { ?>
+      <nav aria-label="Page navigation example">
+       <ul class="pagination pagination-blog justify-content-center">
+        <?php
+        if (isset($_GET['page'])) {
+         $prev = $_GET['page'] - 1;
+        } else {
+         $prev = 0;
+        }
 
+        if ($prev + 1 <= 1) {
+         echo '<li class="page-item disabled"><a class="page-link" href="#!" aria-label="Previous"><span aria-hidden="true">&#xAB;</span></a></li>';
+        } else {
+         echo '<li class="page-item"><a class="page-link" href="index.php?page=' . $prev . '" aria-label="Previous"><span aria-hidden="true">&#xAB;</span></a></li>';
+        }
+        ?>
 
-     <h1 class="pt-5">Publications les plus consultés:</h1>
+        <?php
+        if (isset($_GET['page'])) {
+         $active = $_GET['page'];
+        } else {
+         $active = 1;
+        }
+        for ($i = 1; $i <= $total_pager; $i++) {
+         if ($i == $active) {
+          echo '<li class="page-item active"><a class="page-link" href="index.php?page=' . $i . '">' . $i . '</a></li>';
+         } else {
+          echo '<li class="page-item"><a class="page-link" href="index.php?page=' . $i . '">' . $i . '</a></li>';
+         }
+        }
+        ?>
+
+        <?php
+        if (isset($_GET['page'])) {
+         $next = $_GET['page'] + 1;
+        } else {
+         $next = 2;
+        }
+
+        if ($next - 1 >= $total_pager) {
+         echo '<li class="page-item disabled"><a class="page-link" href="#!" aria-label="Next"><span aria-hidden="true">&#xBB;</span></a></li>';
+        } else {
+         echo '<li class="page-item"><a class="page-link" href="index.php?page=' . $next . '" aria-label="Next"><span aria-hidden="true">&#xBB;</span></a></li>';
+        }
+        ?>
+
+       </ul>
+      </nav>
+     <?php }
+     ?>
+
+     <h1 class="pt-5">Most viewed posts:</h1>
      <hr />
      <div class="row">
       <?php
@@ -249,7 +281,7 @@
          </div>
          <div class="card-footer d-flex align-items-center justify-content-between">
           <div class="post-preview-meta">
-           <img class="post-preview-meta-img" src="./img/mdabarik.jpg" />
+           <img class="post-preview-meta-img" src="./img/user_default_logo.png" />
            <div class="post-preview-meta-details">
             <div class="post-preview-meta-details-name"><?php echo $post_author; ?></div>
             <div class="post-preview-meta-details-date"><?php echo $post_date; ?></div>
@@ -267,7 +299,7 @@
 
      </div>
 
-     <h1 class="pt-5">>Parcourir par catégories:</h1>
+     <h1 class="pt-5">Browse by categories:</h1>
      <hr />
      <div class="row features text-center mb-5">
       <?php
@@ -280,19 +312,21 @@
        $category_id = $categories['category_id'];
        $category_title = $categories['category_name'];
        $total_posts = $categories['category_total_posts'];
+       if ($total_posts > 0) {
       ?>
-       <div class="col-lg-4 col-md-6 mb-5">
-        <a class="card card-link border-top border-top-lg border-primary h-100 lift" href="categories.php?category_id=<?php echo $category_id; ?>&category_name=<?php echo $category_title; ?>">
-         <div class="card-body p-5">
-          <div class="icon-stack icon-stack-lg bg-primary-soft text-primary mb-4"><i data-feather="user"></i></div>
-          <h6><?php echo $category_title; ?></h6>
-         </div>
-         <div class="card-footer bg-transparent pt-0 pb-5">
-          <div class="badge badge-pill badge-light font-weight-normal px-3 py-2"><?php echo $total_posts; ?> Posts</div>
-         </div>
-        </a>
-       </div>
+        <div class="col-lg-4 col-md-6 mb-5">
+         <a class="card card-link border-top border-top-lg border-primary h-100 lift" href="categories.php?category_id=<?php echo $category_id; ?>&category_name=<?php echo $category_title; ?>">
+          <div class="card-body p-5">
+           <div class="icon-stack icon-stack-lg bg-primary-soft text-primary mb-4"><i data-feather="user"></i></div>
+           <h6><?php echo $category_title; ?></h6>
+          </div>
+          <div class="card-footer bg-transparent pt-0 pb-5">
+           <div class="badge badge-pill badge-light font-weight-normal px-3 py-2"><?php echo $total_posts; ?> Posts</div>
+          </div>
+         </a>
+        </div>
       <?php }
+      }
       ?>
 
      </div>
@@ -347,7 +381,7 @@
      <div class="col-md-6 text-md-right small">
       <a href="privacy-policy.php">Mentions Légales</a>
       &#xB7;
-      <a href="terms-conditions.php">CGU</a>
+      <a href="CGU.php">CGU</a>
      </div>
     </div>
    </div>
