@@ -1,3 +1,5 @@
+<?php $current_page = "Détail post"; ?>
+
 <?php require_once("./includes/header.php"); ?>
 <div id="layoutDefault">
  <div id="layoutDefault_content">

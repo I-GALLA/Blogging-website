@@ -1,3 +1,5 @@
+<?php $current_page = "Recherche"; ?>
+
 <?php require_once("./includes/header.php"); ?>
 <div id="layoutDefault">
  <div id="layoutDefault_content">

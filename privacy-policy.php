@@ -1,3 +1,4 @@
+<?php $current_page = "Mentions légales"; ?>
 <?php require_once("./includes/header.php"); ?>
 <div id="layoutDefault">
  <div id="layoutDefault_content">
