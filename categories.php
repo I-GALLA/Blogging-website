@@ -1,12 +1,13 @@
-<?php $current_page = "Catégories"; ?>
+<?php $current_page = "Categories"; ?>
 <?php require_once("./includes/header.php"); ?>
+
 <div id="layoutDefault">
  <div id="layoutDefault_content">
   <main>
 
    <nav class="navbar navbar-marketing navbar-expand-lg bg-white navbar-light">
     <div class="container">
-     <a class="navbar-brand text-dark" href="index.php">techno</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><img src="img/menu.png" style="height:20px;width:25px" /><i data-feather="menu"></i></button>
+     <a class="navbar-brand text-dark" href="index.php">AMDI BLOG</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><img src="img/menu.png" style="height:20px;width:25px" /><i data-feather="menu"></i></button>
      <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto mr-lg-5">
        <li class="nav-item">
@@ -19,8 +20,10 @@
         <a class="nav-link" href="about.php">About</a>
        </li>
       </ul>
-      <a class="btn-teal btn rounded-pill px-4 ml-lg-4" href="backend/signin.php">Sign in<i class="fas fa-arrow-right ml-1"></i></a>
-      <a class="btn-teal btn rounded-pill px-4 ml-lg-4" href="backend/signup.php">Sign up<i class="fas fa-arrow-right ml-1"></i></a>
+      <?php
+      $curr_page = basename(__FILE__);
+      require_once("./includes/registration.php");
+      ?>
      </div>
     </div>
    </nav>
@@ -31,15 +34,15 @@
       <div class="row justify-content-center">
        <div class="col-xl-8 col-lg-10 text-center">
 
-        <h1 class="page-header-title">Catégorie <?php echo $_GET['category_name'];?> </h1>
-        <p class="page-header-text mb-5">Recherchez-vous du contenu que vous n'avez pas encore trouvé? <br> Essayez de chercher dans le champ de recherche ci-dessous!</p>
+        <h1 class="page-header-title">Welcome to <?php echo $_GET['category_name']; ?> Category</h1>
+        <p class="page-header-text mb-5">Are you searching for some content that you haven't found yet? Try searching in the search box below!</p>
         <form class="page-header-signup mb-2 mb-md-0" action="category-search.php" method="POST">
          <div class="form-row justify-content-center">
           <div class="col-lg-6 col-md-8">
            <div class="form-group mr-0 mr-lg-2">
-             <input name="search-keyword" class="form-control form-control-solid rounded-pill" type="text" placeholder="Search keyword..." />
-             <input name="category-id" value="<?php echo $_GET['category_id'] ?>" type="hidden" />
-            </div>
+            <input name="search-keyword" class="form-control form-control-solid rounded-pill" type="text" placeholder="Search keyword..." />
+            <input name="category-id" value="<?php echo $_GET['category_id']; ?>" type="hidden" />
+           </div>
           </div>
           <div class="col-lg-3 col-md-4"><button class="btn btn-teal btn-block btn-marketing rounded-pill" type="submit">Search</button></div>
          </div>
@@ -89,24 +92,22 @@
    <section class="bg-white py-10">
     <!--Start-->
     <div class="container">
-     <h1>Le post le plus populaire:</h1>
+     <h1>Most popular post:</h1>
      <hr />
      <?php
-     // le post le plus populaire
-     $sql4 = "SELECT * FROM posts WHERE post_status = :status AND post_category_id = :id ORDER BY post_views DESC LIMIT 0,1";
+     $sql4 = "SELECT * FROM posts WHERE post_status = :status AND post_category_id = :id ORDER BY post_views DESC LIMIT 0, 1";
      $stmt = $pdo->prepare($sql4);
      $stmt->execute([
-      ':status' => 'Publié',
-       ':id' => $_GET['category_id']
+      ':status' => 'Published',
+      ':id' => $_GET['category_id']
      ]);
      $post = $stmt->fetch(PDO::FETCH_ASSOC);
      $post_id = $post['post_id'];
      $post_title = $post['post_title'];
-     $post_detail = substr($post['post_detail'], 0, 250);
+     $post_detail = substr($post['post_detail'], 0, 300);
      $post_author = $post['post_author'];
      $post_date = $post['post_date'];
      $post_image = $post['post_image'];
-
      ?>
      <a class="card post-preview post-preview-featured lift mb-5" href="single.php?post_id=<?php echo $post_id; ?>">
       <div class="row no-gutters">
@@ -123,7 +124,7 @@
          </div>
          <hr />
          <div class="post-preview-meta">
-          <img class="post-preview-meta-img" src="./img/mdabarik.jpg" />
+          <img class="post-preview-meta-img" src="./img/user_default_logo.png" />
           <div class="post-preview-meta-details">
            <div class="post-preview-meta-details-name"><?php echo $post_author; ?></div>
            <div class="post-preview-meta-details-date"><?php echo $post_date; ?></div>
@@ -134,40 +135,61 @@
       </div>
      </a>
 
-     <h1>Publications récentes:</h1>
+     <?php
+     $sql = "SELECT * FROM posts WHERE post_status = :status AND post_category_id = :id";
+     $stmt = $pdo->prepare($sql);
+     $stmt->execute([
+      ':status' => 'Published',
+      ':id' => $_GET['category_id']
+     ]);
+     $post_count = $stmt->rowCount();
+     $post_per_page = 3;
+     if (isset($_GET['page'])) {
+      $page = $_GET['page'];
+      if ($page == 1) {
+       $page_id = 0;
+      } else {
+       $page_id = ($page * $post_per_page) - $post_per_page;
+      }
+     } else {
+      $page = 1;
+      $page_id = 0;
+     }
+     $total_pager = ceil($post_count / $post_per_page);
+     ?>
+
+     <h1>Recent posting:</h1>
      <hr />
      <div class="row">
-      <!-- Début partie posts  -->
-
       <?php
-      $sql = "SELECT * FROM posts WHERE post_status = :status AND post_category_id = :id ORDER BY post_id DESC LIMIT 0, 6";
+      $sql = "SELECT * FROM posts WHERE post_status = :status AND post_category_id = :id ORDER BY post_id DESC LIMIT $page_id, $post_per_page";
       $stmt = $pdo->prepare($sql);
       $stmt->execute([
-       ':status' => 'Publié',
+       ':status' => 'Published',
        ':id' => $_GET['category_id']
       ]);
       while ($posts = $stmt->fetch(PDO::FETCH_ASSOC)) {
        $post_id = $posts['post_id'];
        $post_title = $posts['post_title'];
-       $post_detail = substr($posts['post_detail'], 0, 100);
+       $post_detail = substr($posts['post_detail'], 0, 140);
        $post_image = $posts['post_image'];
        $post_date = $posts['post_date'];
        $post_author = $posts['post_author'];
-       $post_views = $posts['post_views']; ?>
+       $post_views = $posts['post_views'];
+      ?>
 
        <div class="col-md-6 col-xl-4 mb-5">
-        <!-- href changé de '#' à 'single.php page personnalisée to open new page when click sur card , redimentionner image avec width et height pour avoir même dim -->
-        <a class="card post-preview lift h-100" href="single.php?post_id=<?php echo $post_id ?>"><img class="card-img-top" width="316" height="200" src="./img/<?php echo $post_image; ?>" alt="<?php echo $post_image; ?>" />
+        <a class="card post-preview lift h-100" href="single.php?post_id=<?php echo $post_id; ?>"><img class="card-img-top" src="./img/<?php echo $post_image; ?>" alt="<?php echo $post_image; ?>" />
          <div class="card-body">
           <h5 class="card-title"><?php echo $post_title; ?></h5>
           <p class="card-text"><?php echo $post_detail; ?></p>
          </div>
          <div class="card-footer d-flex align-items-center justify-content-between">
           <div class="post-preview-meta">
-           <img class="post-preview-meta-img" src="./img/mdabarik.jpg" />
+           <img class="post-preview-meta-img" src="./img/user_default_logo.png" />
            <div class="post-preview-meta-details">
             <div class="post-preview-meta-details-name"><?php echo $post_author; ?></div>
-            <div class="post-preview-meta-details-date"><?php echo $post_date; ?> </div>
+            <div class="post-preview-meta-details-date"><?php echo $post_date; ?></div>
            </div>
           </div>
           <div class="post-preview-meta">
@@ -176,63 +198,95 @@
          </div>
         </a>
        </div>
+
       <?php }
       ?>
-      <!-- Fin partie posts  -->
-
-
      </div>
 
-     <nav aria-label="Page navigation example">
-      <ul class="pagination pagination-blog justify-content-center">
-       <li class="page-item disabled">
-        <a class="page-link" href="#!" aria-label="Previous"><span aria-hidden="true">&#xAB;</span></a>
-       </li>
-       <li class="page-item active"><a class="page-link" href="#!">1</a></li>
-       <li class="page-item"><a class="page-link" href="#!">2</a></li>
-       <li class="page-item"><a class="page-link" href="#!">3</a></li>
-       <li class="page-item"><a class="page-link" href="#!">12</a></li>
-       <li class="page-item">
-        <a class="page-link" href="#!" aria-label="Next"><span aria-hidden="true">&#xBB;</span></a>
-       </li>
-      </ul>
-     </nav>
+     <?php
+     if ($post_count > $post_per_page) { ?>
+      <nav aria-label="Page navigation example">
+       <ul class="pagination pagination-blog justify-content-center">
+        <?php
+        if (isset($_GET['page'])) {
+         $prev = $_GET['page'] - 1;
+        } else {
+         $prev = 0;
+        }
+
+        if ($prev + 1 <= 1) {
+         echo '<li class="page-item disabled"><a class="page-link" href="#!" aria-label="Previous"><span aria-hidden="true">&#xAB;</span></a></li>';
+        } else {
+         echo '<li class="page-item"><a class="page-link" href="categories.php?category_id=' . $_GET['category_id'] . '&category_name=' . $_GET['category_name'] . '&page=' . $prev . '" aria-label="Previous"><span aria-hidden="true">&#xAB;</span></a></li>';
+        }
+        ?>
+
+        <?php
+        if (isset($_GET['page'])) {
+         $active = $_GET['page'];
+        } else {
+         $active = 1;
+        }
+        for ($i = 1; $i <= $total_pager; $i++) {
+         if ($i == $active) {
+          echo '<li class="page-item active"><a class="page-link" href="categories.php?category_id=' . $_GET['category_id'] . '&category_name=' . $_GET['category_name'] . '&page=' . $i . '">' . $i . '</a></li>';
+         } else {
+          echo '<li class="page-item"><a class="page-link" href="categories.php?category_id=' . $_GET['category_id'] . '&category_name=' . $_GET['category_name'] . '&page=' . $i . '">' . $i . '</a></li>';
+         }
+        }
+        ?>
+
+        <?php
+        if (isset($_GET['page'])) {
+         $next = $_GET['page'] + 1;
+        } else {
+         $next = 2;
+        }
+
+        if ($next - 1 >= $total_pager) {
+         echo '<li class="page-item disabled"><a class="page-link" href="#!" aria-label="Next"><span aria-hidden="true">&#xBB;</span></a></li>';
+        } else {
+         echo '<li class="page-item"><a class="page-link" href="categories.php?category_id=' . $_GET['category_id'] . '&category_name=' . $_GET['category_name'] . '&page=' . $next . '" aria-label="Next"><span aria-hidden="true">&#xBB;</span></a></li>';
+        }
+        ?>
+
+       </ul>
+      </nav>
+     <?php }
+     ?>
 
 
-     <h1 class="pt-5">Publications les plus consultées:</h1>
+     <h1 class="pt-5">Most viewed posts:</h1>
      <hr />
      <div class="row">
       <?php
-      // les posts les plus visualisés
       $sql2 = "SELECT * FROM posts WHERE post_status = :status AND post_category_id = :id ORDER BY post_views DESC LIMIT 0, 3";
       $stmt = $pdo->prepare($sql2);
       $stmt->execute([
-        ':status' => 'Publié',
-        ':id' => $_GET['category_id']
-       ]);
+       ':status' => 'Published',
+       ':id' => $_GET['category_id']
+      ]);
       while ($posts = $stmt->fetch(PDO::FETCH_ASSOC)) {
-
        $post_id = $posts['post_id'];
        $post_title = $posts['post_title'];
-       $post_detail = substr($posts['post_detail'], 0, 100);
+       $post_detail = substr($posts['post_detail'], 0, 140);
        $post_image = $posts['post_image'];
        $post_date = $posts['post_date'];
        $post_author = $posts['post_author'];
        $post_views = $posts['post_views']; ?>
 
        <div class="col-md-6 col-xl-4 mb-5">
-        <!-- href changé de '#' à 'single.php page personnalisée to open new page when click sur card , redimentionner image avec width et height pour avoir même dim -->
-        <a class="card post-preview lift h-100" href="single.php?post_id=<?php echo $post_id ?>"><img class="card-img-top" width="316" height="200" src="./img/<?php echo $post_image; ?>" alt="<?php echo $post_image; ?>" />
+        <a class="card post-preview lift h-100" href="single.php?post_id=<?php echo $post_id; ?>"><img class="card-img-top" src="./img/<?php echo $post_image; ?>" alt="<?php echo $post_image; ?>" />
          <div class="card-body">
           <h5 class="card-title"><?php echo $post_title; ?></h5>
           <p class="card-text"><?php echo $post_detail; ?></p>
          </div>
          <div class="card-footer d-flex align-items-center justify-content-between">
           <div class="post-preview-meta">
-           <img class="post-preview-meta-img" src="./img/mdabarik.jpg" />
+           <img class="post-preview-meta-img" src="./img/user_default_logo.png" />
            <div class="post-preview-meta-details">
             <div class="post-preview-meta-details-name"><?php echo $post_author; ?></div>
-            <div class="post-preview-meta-details-date"><?php echo $post_date; ?> </div>
+            <div class="post-preview-meta-details-date"><?php echo $post_date; ?></div>
            </div>
           </div>
           <div class="post-preview-meta">
@@ -243,9 +297,7 @@
        </div>
 
       <?php }
-
       ?>
-
      </div>
 
     </div>
@@ -297,9 +349,9 @@
    <div class="container">
     <hr class="mb-1" />
     <div class="row align-items-center">
-     <div class="col-md-6 small">Copyright &#xA9; techno 2021</div>
+     <div class="col-md-6 small">Copyright &#xA9; AMDI4 2021</div>
      <div class="col-md-6 text-md-right small">
-     <a href="privacy-policy.php">Mentions légales</a>
+      <a href="privacy-policy.php">Mentions Légales</a>
       &#xB7;
       <a href="CGU.php">CGU</a>
      </div>
@@ -308,4 +360,5 @@
   </footer>
  </div>
 </div>
+
 <?php require_once("./includes/footer.php"); ?>
