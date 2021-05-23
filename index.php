@@ -95,6 +95,7 @@
           $stmt = $pdo->prepare($sql4);
           $stmt->execute();
           $post = $stmt->fetch(PDO::FETCH_ASSOC);
+          $post_id = $post['post_id'];
           $post_title = $post['post_title'];
           $post_detail = substr($post['post_detail'], 0, 250);
           $post_author = $post['post_author'];
@@ -102,7 +103,7 @@
           $post_image = $post['post_image'];
 
           ?>
-          <a class="card post-preview post-preview-featured lift mb-5" href="#">
+          <a class="card post-preview post-preview-featured lift mb-5" href="single.php?post_id=<?php echo $post_id; ?>">
             <div class="row no-gutters">
               <div class="col-lg-5">
                 <div class="post-preview-featured-img" style='background-image: url("./img/<?php echo $post_image; ?>")'></div>
