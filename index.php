@@ -162,7 +162,7 @@
            <img class="post-preview-meta-img" src="./img/mdabarik.jpg" />
            <div class="post-preview-meta-details">
             <div class="post-preview-meta-details-name"><?php echo $post_author; ?></div>
-            <div class="post-preview-meta-details-date">Publié le : <?php echo $post_date; ?> </div>
+            <div class="post-preview-meta-details-date"><?php echo $post_date; ?> </div>
            </div>
           </div>
           <div class="post-preview-meta">
@@ -224,7 +224,7 @@
            <img class="post-preview-meta-img" src="./img/mdabarik.jpg" />
            <div class="post-preview-meta-details">
             <div class="post-preview-meta-details-name"><?php echo $post_author; ?></div>
-            <div class="post-preview-meta-details-date">Publié le : <?php echo $post_date; ?> </div>
+            <div class="post-preview-meta-details-date"><?php echo $post_date; ?> </div>
            </div>
           </div>
           <div class="post-preview-meta">
