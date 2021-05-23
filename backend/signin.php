@@ -8,7 +8,7 @@
  <meta charset="utf-8" />
  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
- <title>SIGN in || Admin Panel</title>
+ <title>SIGN IN || Admin Panel</title>
  <link href="css/styles.css" rel="stylesheet" />
  <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
  <script data-search-pseudo-elements defer src="js/all.min.js"></script>
@@ -45,10 +45,20 @@
          $user_role = $user['user_role'];
          if (password_verify($password, $user_password_hash)) {
           $success = "Sign in successful!";
+          if (!empty($_POST['check'])) {
+           $user_id = $user['user_id'];
+           $user_nickname = $user['user_nickname'];
+           $d_user_id = base64_encode($user_id);
+           $d_user_nickname = base64_encode($user_nickname);
+           // userid
+           setcookie('_uid_', $d_user_id, time() + 60 * 60 * 24, '/', '', '', true);
+           // user nickname
+           setcookie('_uiid_', $d_user_nickname, time() + 60 * 60 * 24, '/', '', '', true);
+          }
           $_SESSION['user_name'] = $user_name;
           $_SESSION['user_role'] = $user_role;
           $_SESSION['login'] = 'success';
-          header("Refresh:2; url=../index.php"); //refresh after 2secondes
+          header("Refresh:2;url=../index.php");
          } else {
           $error_password = "Wrong password!";
          }

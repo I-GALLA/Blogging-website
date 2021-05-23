@@ -1,16 +1,17 @@
 <?php session_start(); ?>
-
 <?php $current_page = "Home"; ?>
 <?php require_once("./includes/header.php"); ?>
+
 <div id="layoutDefault">
  <div id="layoutDefault_content">
   <main>
 
-
-
-   <nav class="navbar navbar-marketing navbar-expand-lg bg-white navbar-light">
+   <nav class="navbar navbar-marketing navbar-expand-lg bg-white  navbar-light">
     <div class="container">
-     <a class="navbar-brand text-dark" href="index.php">techno</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><img src="img/menu.png" style="height:20px;width:25px" /><i data-feather="menu"></i></button>
+     <a class="navbar-brand text-dark" href="index.php">TechBarik</a>
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <img src="img/menu.png" style="height:20px;width:25px" /><i data-feather="menu"></i>
+     </button>
      <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto mr-lg-5">
        <li class="nav-item">
@@ -24,18 +25,35 @@
        </li>
       </ul>
       <?php
-        if(isset($_SESSION['login'])){ ?>
-          <form action="signout.php">
-            <button class="btn-teal btn rounded-pill px-4 ml-lg-4"> Sign out (<?php echo $_SESSION['user_name'] ;?>)</button>
-
-          </form>
-        <?php } else { ?>
-          <a class="btn-teal btn rounded-pill px-4 ml-lg-4" href="backend/signin.php">Sign in</a>
-          <a class="btn-teal btn rounded-pill px-4 ml-lg-4" href="backend/signup.php">Sign up</a>
-        <?php }
-
+      if (isset($_SESSION['login'])) { ?>
+       <form action="signout.php">
+        <button class="btn-teal btn rounded-pill px-4 ml-lg-4">Sign out (<?php echo $_SESSION['user_name']; ?>)</button>
+       </form>
+      <?php } else {
+       if (!isset($_COOKIE['_uid_']) && !isset($_COOKIE['_uiid_'])) {
+        echo '<a class="btn-teal btn rounded-pill px-4 ml-lg-4" href="backend/signin.php">Sign in</a>';
+        echo '<a class="btn-teal btn rounded-pill px-4 ml-lg-4" href="backend/signup.php">Sign up</a>';
+       } else {
+        $user_id = base64_decode($_COOKIE['_uid_']);
+        $user_nickname = base64_decode($_COOKIE['_uiid_']);
+        $sql = "SELECT * FROM users WHERE user_id = :id AND user_nickname = :nickname";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+         ':id' => $user_id,
+         ':nickname' => $user_nickname
+        ]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user_name = $user['user_name'];
+        $user_role = $user['user_role'];
+        echo "<form action='signout.php'>
+                <button class='btn-teal btn rounded-pill px-4 ml-lg-4'>Sign out ({$user_name})</button>
+               </form>";
+        $_SESSION['user_name'] = $user_nickname;
+        $_SESSION['user_role'] = $user_role;
+        $_SESSION['login'] = 'success';
+       }
+      }
       ?>
-      
      </div>
     </div>
    </nav>
@@ -51,9 +69,13 @@
         <form class="page-header-signup mb-2 mb-md-0" action="search.php" method="POST">
          <div class="form-row justify-content-center">
           <div class="col-lg-6 col-md-8">
-           <div class="form-group mr-0 mr-lg-2"><input name="search-keyword" class="form-control form-control-solid rounded-pill" type="text" placeholder="Search keyword..." /></div>
+           <div class="form-group mr-0 mr-lg-2">
+            <input name="search-keyword" class="form-control form-control-solid rounded-pill" type="text" placeholder="Search keyword..." />
+           </div>
           </div>
-          <div class="col-lg-3 col-md-4"><button class="btn btn-teal btn-block btn-marketing rounded-pill" type="submit">Search</button></div>
+          <div class="col-lg-3 col-md-4">
+           <button class="btn btn-teal btn-block btn-marketing rounded-pill" type="submit">Search</button>
+          </div>
          </div>
         </form>
 
@@ -84,9 +106,6 @@
       </defs>
       <title>wave</title>
       <g class="b">
-       <path class="c" d="M1963,327H-105V65A2647.49,2647.49,0,0,1,431,19c217.7,3.5,239.6,30.8,470,36,297.3,6.7,367.5-36.2,642-28a2511.41,2511.41,0,0,1,420,48" />
-      </g>
-      <g class="b">
        <path class="d" d="M-127,404H1963V44c-140.1-28-343.3-46.7-566,22-75.5,23.3-118.5,45.9-162,64-48.6,20.2-404.7,128-784,0C355.2,97.7,341.6,78.3,235,50,86.6,10.6-41.8,6.9-127,10" />
       </g>
       <g class="b">
@@ -101,23 +120,21 @@
    <section class="bg-white py-10">
     <!--Start-->
     <div class="container">
-     <h1>Le post le plus populaire:</h1>
+     <h1>Publication la plus populaire:</h1>
      <hr />
      <?php
-     // le post le plus populaire
-     $sql4 = "SELECT * FROM posts WHERE post_status = :status ORDER BY post_views DESC LIMIT 0,1";
+     $sql4 = "SELECT * FROM posts WHERE post_status = :status ORDER BY post_views DESC LIMIT 0, 1";
      $stmt = $pdo->prepare($sql4);
      $stmt->execute([
-      ':status' => 'Publié',
+      ':status' => 'Published'
      ]);
      $post = $stmt->fetch(PDO::FETCH_ASSOC);
      $post_id = $post['post_id'];
      $post_title = $post['post_title'];
-     $post_detail = substr($post['post_detail'], 0, 250);
+     $post_detail = substr($post['post_detail'], 0, 300);
      $post_author = $post['post_author'];
      $post_date = $post['post_date'];
      $post_image = $post['post_image'];
-
      ?>
      <a class="card post-preview post-preview-featured lift mb-5" href="single.php?post_id=<?php echo $post_id; ?>">
       <div class="row no-gutters">
@@ -148,26 +165,24 @@
      <h1>Publications récentes:</h1>
      <hr />
      <div class="row">
-      <!-- Début partie posts  -->
-
       <?php
       $sql = "SELECT * FROM posts WHERE post_status = :status ORDER BY post_id DESC LIMIT 0, 6";
       $stmt = $pdo->prepare($sql);
       $stmt->execute([
-       ':status' => 'Publié'
+       ':status' => 'Published'
       ]);
       while ($posts = $stmt->fetch(PDO::FETCH_ASSOC)) {
        $post_id = $posts['post_id'];
        $post_title = $posts['post_title'];
-       $post_detail = substr($posts['post_detail'], 0, 100);
+       $post_detail = substr($posts['post_detail'], 0, 140);
        $post_image = $posts['post_image'];
        $post_date = $posts['post_date'];
        $post_author = $posts['post_author'];
-       $post_views = $posts['post_views']; ?>
+       $post_views = $posts['post_views'];
+      ?>
 
        <div class="col-md-6 col-xl-4 mb-5">
-        <!-- href changé de '#' à 'single.php page personnalisée to open new page when click sur card , redimentionner image avec width et height pour avoir même dim -->
-        <a class="card post-preview lift h-100" href="single.php?post_id=<?php echo $post_id ?>"><img class="card-img-top" width="316" height="200" src="./img/<?php echo $post_image; ?>" alt="<?php echo $post_image; ?>" />
+        <a class="card post-preview lift h-100" href="single.php?post_id=<?php echo $post_id; ?>"><img class="card-img-top" src="./img/<?php echo $post_image; ?>" alt="<?php echo $post_image; ?>" />
          <div class="card-body">
           <h5 class="card-title"><?php echo $post_title; ?></h5>
           <p class="card-text"><?php echo $post_detail; ?></p>
@@ -177,7 +192,7 @@
            <img class="post-preview-meta-img" src="./img/mdabarik.jpg" />
            <div class="post-preview-meta-details">
             <div class="post-preview-meta-details-name"><?php echo $post_author; ?></div>
-            <div class="post-preview-meta-details-date"><?php echo $post_date; ?> </div>
+            <div class="post-preview-meta-details-date"><?php echo $post_date; ?></div>
            </div>
           </div>
           <div class="post-preview-meta">
@@ -186,10 +201,9 @@
          </div>
         </a>
        </div>
+
       <?php }
       ?>
-      <!-- Fin partie posts  -->
-
 
      </div>
 
@@ -213,23 +227,22 @@
      <hr />
      <div class="row">
       <?php
-      // les posts les plus visualisés
-      $sql2 = "SELECT * FROM posts ORDER BY post_views DESC LIMIT 0, 3";
+      $sql2 = "SELECT * FROM posts WHERE post_status = :status ORDER BY post_views DESC LIMIT 0, 3";
       $stmt = $pdo->prepare($sql2);
-      $stmt->execute();
+      $stmt->execute([
+       ':status' => 'Published'
+      ]);
       while ($posts = $stmt->fetch(PDO::FETCH_ASSOC)) {
-
        $post_id = $posts['post_id'];
        $post_title = $posts['post_title'];
-       $post_detail = substr($posts['post_detail'], 0, 100);
+       $post_detail = substr($posts['post_detail'], 0, 140);
        $post_image = $posts['post_image'];
        $post_date = $posts['post_date'];
        $post_author = $posts['post_author'];
        $post_views = $posts['post_views']; ?>
 
        <div class="col-md-6 col-xl-4 mb-5">
-        <!-- href changé de '#' à 'single.php page personnalisée to open new page when click sur card , redimentionner image avec width et height pour avoir même dim -->
-        <a class="card post-preview lift h-100" href="single.php?post_id=<?php echo $post_id ?>"><img class="card-img-top" width="316" height="200" src="./img/<?php echo $post_image; ?>" alt="<?php echo $post_image; ?>" />
+        <a class="card post-preview lift h-100" href="single.php?post_id=<?php echo $post_id; ?>"><img class="card-img-top" src="./img/<?php echo $post_image; ?>" alt="<?php echo $post_image; ?>" />
          <div class="card-body">
           <h5 class="card-title"><?php echo $post_title; ?></h5>
           <p class="card-text"><?php echo $post_detail; ?></p>
@@ -239,7 +252,7 @@
            <img class="post-preview-meta-img" src="./img/mdabarik.jpg" />
            <div class="post-preview-meta-details">
             <div class="post-preview-meta-details-name"><?php echo $post_author; ?></div>
-            <div class="post-preview-meta-details-date"><?php echo $post_date; ?> </div>
+            <div class="post-preview-meta-details-date"><?php echo $post_date; ?></div>
            </div>
           </div>
           <div class="post-preview-meta">
@@ -250,28 +263,26 @@
        </div>
 
       <?php }
-
       ?>
 
      </div>
 
-     <h1 class="pt-5">Parcourir par catégories:</h1>
+     <h1 class="pt-5">>Parcourir par catégories:</h1>
      <hr />
      <div class="row features text-center mb-5">
-      <!-- Début partie commentaire  -->
       <?php
       $sql1 = "SELECT * FROM categories WHERE category_status = :status";
       $stmt = $pdo->prepare($sql1);
       $stmt->execute([
-       ':status' => 'Publié'
+       ':status' => 'Published'
       ]);
       while ($categories = $stmt->fetch(PDO::FETCH_ASSOC)) {
        $category_id = $categories['category_id'];
        $category_title = $categories['category_name'];
-       $total_posts = $categories['category_total_posts']; ?>
-
+       $total_posts = $categories['category_total_posts'];
+      ?>
        <div class="col-lg-4 col-md-6 mb-5">
-        <a class="card card-link border-top border-top-lg border-primary h-100 lift" href="categories.php?category_id=<?php echo $category_id; ?>&category_name=<?php echo $category_title;?>">
+        <a class="card card-link border-top border-top-lg border-primary h-100 lift" href="categories.php?category_id=<?php echo $category_id; ?>&category_name=<?php echo $category_title; ?>">
          <div class="card-body p-5">
           <div class="icon-stack icon-stack-lg bg-primary-soft text-primary mb-4"><i data-feather="user"></i></div>
           <h6><?php echo $category_title; ?></h6>
@@ -283,7 +294,6 @@
        </div>
       <?php }
       ?>
-      <!-- Fin partie commentaire  -->
 
      </div>
 
@@ -313,9 +323,6 @@
       </defs>
       <title>wave</title>
       <g class="b">
-       <path class="c" d="M1963,327H-105V65A2647.49,2647.49,0,0,1,431,19c217.7,3.5,239.6,30.8,470,36,297.3,6.7,367.5-36.2,642-28a2511.41,2511.41,0,0,1,420,48" />
-      </g>
-      <g class="b">
        <path class="d" d="M-127,404H1963V44c-140.1-28-343.3-46.7-566,22-75.5,23.3-118.5,45.9-162,64-48.6,20.2-404.7,128-784,0C355.2,97.7,341.6,78.3,235,50,86.6,10.6-41.8,6.9-127,10" />
       </g>
       <g class="b">
@@ -336,11 +343,11 @@
    <div class="container">
     <hr class="mb-1" />
     <div class="row align-items-center">
-     <div class="col-md-6 small">Copyright &#xA9; techno 2021</div>
+     <div class="col-md-6 small">Copyright &#xA9; AMDI4 2021</div>
      <div class="col-md-6 text-md-right small">
-      <a href="privacy-policy.php">Mentions légales</a>
+      <a href="privacy-policy.php">Mentions Légales</a>
       &#xB7;
-      <a href="CGU.php">CGU</a>
+      <a href="terms-conditions.php">CGU</a>
      </div>
     </div>
    </div>
