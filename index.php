@@ -89,28 +89,38 @@
         <div class="container">
           <h1>Most popular post:</h1>
           <hr />
+          <?php
+          // le post le plus populaire
+          $sql4 = "SELECT * FROM posts ORDER BY post_views DESC LIMIT 0,1";
+          $stmt = $pdo->prepare($sql4);
+          $stmt->execute();
+          $post = $stmt->fetch(PDO::FETCH_ASSOC);
+          $post_title = $post['post_title'];
+          $post_detail = substr($post['post_detail'], 0, 250);
+          $post_author = $post['post_author'];
+          $post_date = $post['post_date'];
+          $post_image = $post['post_image'];
+
+          ?>
           <a class="card post-preview post-preview-featured lift mb-5" href="#">
             <div class="row no-gutters">
               <div class="col-lg-5">
-                <div class="post-preview-featured-img" style='background-image: url("./img/pic1.png")'></div>
+                <div class="post-preview-featured-img" style='background-image: url("./img/<?php echo $post_image; ?>")'></div>
               </div>
               <div class="col-lg-7">
                 <div class="card-body">
                   <div class="py-5">
-                    <h5 class="card-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit</h5>
+                    <h5 class="card-title"><?php echo $post_title; ?></h5>
                     <p class="card-text">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                      consequat.
+                      <?php echo $post_detail; ?>
                     </p>
                   </div>
                   <hr />
                   <div class="post-preview-meta">
                     <img class="post-preview-meta-img" src="./img/mdabarik.jpg" />
                     <div class="post-preview-meta-details">
-                      <div class="post-preview-meta-details-name">Valerie Luna</div>
-                      <div class="post-preview-meta-details-date">Feb 5 &#xB7; 6 min read</div>
+                      <div class="post-preview-meta-details-name"><?php echo $post_author; ?></div>
+                      <div class="post-preview-meta-details-date"><?php echo $post_date; ?></div>
                     </div>
                   </div>
                 </div>
