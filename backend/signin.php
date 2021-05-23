@@ -1,6 +1,12 @@
 <?php session_start(); ?>
 <?php require_once('../includes/db.php'); ?>
 
+<?php
+if (isset($_SESSION['login']) || isset($_COOKIE['_uid_']) || isset($_COOKIE['_uiid_'])) {
+ header("Location: ../index.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,6 +62,8 @@
            setcookie('_uiid_', $d_user_nickname, time() + 60 * 60 * 24, '/', '', '', true);
           }
           $_SESSION['user_name'] = $user_name;
+          $_SESSION['user_id'] = $user['user_id'];
+          $_SESSION['user_nickname'] = $user['user_nickname'];
           $_SESSION['user_role'] = $user_role;
           $_SESSION['login'] = 'success';
           header("Refresh:2;url=../index.php");
@@ -103,7 +111,10 @@
          </form>
         </div>
         <div class="card-footer text-center">
-         <div class="small"><a href="signup.php">Need an account? Sign up!</a></div>
+         <div class="small">
+          <a href="signup.php">Need an account? Sign up!</a> <br>
+          <a href="forgot-password.php">Forgot password</a>
+         </div>
         </div>
        </div>
       </div>
