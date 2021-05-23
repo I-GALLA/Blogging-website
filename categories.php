@@ -31,8 +31,8 @@
       <div class="row justify-content-center">
        <div class="col-xl-8 col-lg-10 text-center">
 
-        <h1 class="page-header-title">Welcome to techno</h1>
-        <p class="page-header-text mb-5">Are you searching for some content that you haven't found yet? Try searching in the search box below!</p>
+        <h1 class="page-header-title">Catégorie <?php echo $_GET['category_name'];?> </h1>
+        <p class="page-header-text mb-5">Recherchez-vous du contenu que vous n'avez pas encore trouvé? <br> Essayez de chercher dans le champ de recherche ci-dessous!</p>
         <form class="page-header-signup mb-2 mb-md-0">
          <div class="form-row justify-content-center">
           <div class="col-lg-6 col-md-8">
@@ -86,30 +86,43 @@
    <section class="bg-white py-10">
     <!--Start-->
     <div class="container">
-     <h1>Most popular post:</h1>
+     <h1>Le post le plus populaire:</h1>
      <hr />
-     <a class="card post-preview post-preview-featured lift mb-5" href="#">
+     <?php
+     // le post le plus populaire
+     $sql4 = "SELECT * FROM posts WHERE post_category_id = :id ORDER BY post_views DESC LIMIT 0,1";
+     $stmt = $pdo->prepare($sql4);
+     $stmt->execute([
+       ':id' => $_GET['category_id']
+     ]);
+     $post = $stmt->fetch(PDO::FETCH_ASSOC);
+     $post_id = $post['post_id'];
+     $post_title = $post['post_title'];
+     $post_detail = substr($post['post_detail'], 0, 250);
+     $post_author = $post['post_author'];
+     $post_date = $post['post_date'];
+     $post_image = $post['post_image'];
+
+     ?>
+     <a class="card post-preview post-preview-featured lift mb-5" href="single.php?post_id=<?php echo $post_id; ?>">
       <div class="row no-gutters">
        <div class="col-lg-5">
-        <div class="post-preview-featured-img" style='background-image: url("./img/pic1.png")'></div>
+        <div class="post-preview-featured-img" style='background-image: url("./img/<?php echo $post_image; ?>")'></div>
        </div>
        <div class="col-lg-7">
         <div class="card-body">
          <div class="py-5">
-          <h5 class="card-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit</h5>
+          <h5 class="card-title"><?php echo $post_title; ?></h5>
           <p class="card-text">
-           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-           tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-           quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-           consequat.
+           <?php echo $post_detail; ?>
           </p>
          </div>
          <hr />
          <div class="post-preview-meta">
           <img class="post-preview-meta-img" src="./img/mdabarik.jpg" />
           <div class="post-preview-meta-details">
-           <div class="post-preview-meta-details-name">Valerie Luna</div>
-           <div class="post-preview-meta-details-date">Feb 5 &#xB7; 6 min read</div>
+           <div class="post-preview-meta-details-name"><?php echo $post_author; ?></div>
+           <div class="post-preview-meta-details-date"><?php echo $post_date; ?></div>
           </div>
          </div>
         </div>

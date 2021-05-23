@@ -33,8 +33,8 @@
       <div class="row justify-content-center">
        <div class="col-xl-8 col-lg-10 text-center">
 
-        <h1 class="page-header-title">Welcome to techno</h1>
-        <p class="page-header-text mb-5">Recherchez-vous du contenu que vous n'avez pas encore trouvé? Essayez de chercher dans le champ de recherche ci-dessous!</p>
+        <h1 class="page-header-title">Bienvenue dans Techno Blog</h1>
+        <p class="page-header-text mb-5">Recherchez-vous du contenu que vous n'avez pas encore trouvé? <br> Essayez de chercher dans le champ de recherche ci-dessous!</p>
         <form class="page-header-signup mb-2 mb-md-0" action="search.php" method="POST">
          <div class="form-row justify-content-center">
           <div class="col-lg-6 col-md-8">
@@ -88,7 +88,7 @@
    <section class="bg-white py-10">
     <!--Start-->
     <div class="container">
-     <h1>Most popular post:</h1>
+     <h1>Le post le plus populaire:</h1>
      <hr />
      <?php
      // le post le plus populaire
@@ -240,7 +240,7 @@
 
      </div>
 
-     <h1 class="pt-5">Browse by categories:</h1>
+     <h1 class="pt-5">Parcourir par catégories:</h1>
      <hr />
      <div class="row features text-center mb-5">
       <!-- Début partie commentaire  -->
@@ -251,11 +251,12 @@
        ':status' => 'Publié'
       ]);
       while ($categories = $stmt->fetch(PDO::FETCH_ASSOC)) {
+       $category_id = $categories['category_id'];
        $category_title = $categories['category_name'];
        $total_posts = $categories['category_total_posts']; ?>
 
        <div class="col-lg-4 col-md-6 mb-5">
-        <a class="card card-link border-top border-top-lg border-primary h-100 lift" href="#!">
+        <a class="card card-link border-top border-top-lg border-primary h-100 lift" href="categories.php?category_id=<?php echo $category_id; ?>&category_name=<?php echo $category_title;?>">
          <div class="card-body p-5">
           <div class="icon-stack icon-stack-lg bg-primary-soft text-primary mb-4"><i data-feather="user"></i></div>
           <h6><?php echo $category_title; ?></h6>
