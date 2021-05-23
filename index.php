@@ -34,11 +34,11 @@
        <div class="col-xl-8 col-lg-10 text-center">
 
         <h1 class="page-header-title">Welcome to techno</h1>
-        <p class="page-header-text mb-5">Are you searching for some content that you haven't found yet? Try searching in the search box below!</p>
-        <form class="page-header-signup mb-2 mb-md-0">
+        <p class="page-header-text mb-5">Recherchez-vous du contenu que vous n'avez pas encore trouvé? Essayez de chercher dans le champ de recherche ci-dessous!</p>
+        <form class="page-header-signup mb-2 mb-md-0" action="search.php" method="POST">
          <div class="form-row justify-content-center">
           <div class="col-lg-6 col-md-8">
-           <div class="form-group mr-0 mr-lg-2"><input class="form-control form-control-solid rounded-pill" type="text" placeholder="Search keyword..." /></div>
+           <div class="form-group mr-0 mr-lg-2"><input name="search-keyword" class="form-control form-control-solid rounded-pill" type="text" placeholder="Search keyword..." /></div>
           </div>
           <div class="col-lg-3 col-md-4"><button class="btn btn-teal btn-block btn-marketing rounded-pill" type="submit">Search</button></div>
          </div>
