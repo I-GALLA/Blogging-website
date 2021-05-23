@@ -25,9 +25,22 @@
      $full_name = $first_name . " " . $last_name;
 
      $nick_name = trim($_POST['nick-name']);
+     //nickname already exist
+     $sql2 = "SELECT * FROM users WHERE user_nickname = :nickname";
+     
+     $stmt2 = $pdo->prepare($sql2);
+     $stmt2->execute([
+         ':nickname' => $nick_name
+     ]);
+     $countNickname = $stmt2->rowCount();
+     if($countNickname != 0){
+         $error_nickname_exist = "Nickname alreday exist !";
+     }
 
      $email = trim($_POST['email-address']);
+     //email already exist
      $sql1 = "SELECT * FROM users WHERE user_email = :email";
+     
      $stmt1 = $pdo->prepare($sql1);
      $stmt1->execute([
          ':email' => $email
@@ -70,7 +83,10 @@
         <div class="card-body">
          <form action="signup.php" method="POST">
           <?php
-          if(isset($error_email_exist)){
+          if(isset($error_nickname_exist)){
+            echo "<p class='alert alert-danger'>{$error_nickname_exist}</p>";
+          }
+          else if(isset($error_email_exist)){
             echo "<p class='alert alert-danger'>{$error_email_exist}</p>";
           }
           else if (isset($error)) {
@@ -93,7 +109,7 @@
             </div>
            </div>
           </div>
-          <div class="form-group"><label class="small mb-1" for="userNickname">Nickn Name</label>
+          <div class="form-group"><label class="small mb-1" for="userNickname">Nick Name</label>
            <input name="nick-name" class="form-control py-4" id="userNickname" type="text" placeholder="Enter nickname" required="true" />
           </div>
           <div class="form-group"><label class="small mb-1" for="inputEmailAddress">Email</label>
