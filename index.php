@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <?php $current_page = "Home"; ?>
 <?php require_once("./includes/header.php"); ?>
 <div id="layoutDefault">
@@ -21,8 +23,19 @@
         <a class="nav-link" href="about.php">About</a>
        </li>
       </ul>
-      <a class="btn-teal btn rounded-pill px-4 ml-lg-4" href="backend/signin.php">Sign in<i class="fas fa-arrow-right ml-1"></i></a>
-      <a class="btn-teal btn rounded-pill px-4 ml-lg-4" href="backend/signup.php">Sign up<i class="fas fa-arrow-right ml-1"></i></a>
+      <?php
+        if(isset($_SESSION['login'])){ ?>
+          <form action="index.php">
+            <button class="btn-teal btn rounded-pill px-4 ml-lg-4"> Sign out (<?php echo $_SESSION['user_name'] ;?>)</button>
+
+          </form>
+        <?php } else { ?>
+          <a class="btn-teal btn rounded-pill px-4 ml-lg-4" href="backend/signin.php">Sign in</a>
+          <a class="btn-teal btn rounded-pill px-4 ml-lg-4" href="backend/signup.php">Sign up</a>
+        <?php }
+
+      ?>
+      
      </div>
     </div>
    </nav>
