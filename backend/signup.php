@@ -30,6 +30,7 @@
      if ($password != $confirm_password) {
       $error = "Password doesn't match";
      } else {
+      date_default_timezone_set('Europe/Paris');
       $hash = password_hash($password, PASSWORD_BCRYPT, ['cost'=>10]);
       $sql = "INSERT INTO users (user_name, user_email, user_password, user_photo, registered_on) VALUES (:name, :email, :password, :photo, :date)";
       $stmt = $pdo->prepare($sql);
@@ -40,6 +41,7 @@
        ':photo' => 'default-logo.png',
        ':date' => date("M n, Y") . ' à '. date("h:i A")
       ]);
+      $success = true;
      }
     }
     ?>
@@ -56,6 +58,8 @@
           <?php
           if (isset($error)) {
            echo "<p class='alert alert-danger'>{$error}</p>";
+          } else if(isset($success)){
+              echo "<p class='alert alert-success'>Account created successfully .. <a href='signin.php'>Sign in now !</a></p>";
           }
           ?>
           <div class="form-row">
