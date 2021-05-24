@@ -14,7 +14,7 @@ if (isset($_SESSION['login']) || isset($_COOKIE['_uid_']) || isset($_COOKIE['_ui
  <meta charset="utf-8" />
  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
- <title>SIGN UP || Admin Panel</title>
+ <title>Créer un compte</title>
  <link href="css/styles.css" rel="stylesheet" />
  <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
  <script data-search-pseudo-elements defer src="js/all.min.js"></script>
@@ -82,7 +82,7 @@ if (isset($_SESSION['login']) || isset($_COOKIE['_uid_']) || isset($_COOKIE['_ui
       <div class="col-lg-7">
        <div class="card shadow-lg border-0 rounded-lg mt-5 mb-3">
         <div class="card-header justify-content-center">
-         <h3 class="font-weight-light my-4">Create Account</h3>
+         <h3 class="font-weight-light my-4">Créer un compte</h3>
         </div>
         <div class="card-body">
          <form action="signup.php" method="POST">
@@ -94,51 +94,50 @@ if (isset($_SESSION['login']) || isset($_COOKIE['_uid_']) || isset($_COOKIE['_ui
           } else if (isset($error)) {
            echo "<p class='alert alert-danger'>{$error}</p>";
           } else if (isset($success)) {
-           echo "<p class='alert alert-success'>
-                                                            Account created successfully. <a href='signin.php'>Sign in now</a>
-                                                          </p>";
+           echo "<p class='alert alert-success'>Account created successfully. <a href='signin.php'>Sign in now</a>
+                 </p>";
           }
           ?>
           <div class="form-row">
            <div class="col-md-6">
             <div class="form-group">
-             <label class="small mb-1" for="inputFirstName">First Name</label>
-             <input name="first-name" class="form-control py-4" id="inputFirstName" type="text" placeholder="Enter first name" required="true" />
+             <label class="small mb-1" for="inputFirstName">Prénom</label>
+             <input name="first-name" class="form-control py-4" id="inputFirstName" type="text" placeholder="Entrer votre prénom" required="true" />
             </div>
            </div>
            <div class="col-md-6">
             <div class="form-group">
-             <label class="small mb-1" for="inputLastName">Last Name</label>
-             <input name="last-name" class="form-control py-4" id="inputLastName" type="text" placeholder="Enter last name" required="true" />
+             <label class="small mb-1" for="inputLastName">Nom</label>
+             <input name="last-name" class="form-control py-4" id="inputLastName" type="text" placeholder="Entrer votre nom" required="true" />
             </div>
            </div>
           </div>
-          <div class="form-group"><label class="small mb-1" for="userNickname">Nick Name</label>
-           <input name="nick-name" class="form-control py-4" id="userNickname" type="text" placeholder="Enter nick name" required="true" />
+          <div class="form-group"><label class="small mb-1" for="userNickname">Pseudo</label>
+           <input name="nick-name" class="form-control py-4" id="userNickname" type="text" placeholder="Entrer un pseudo" required="true" />
           </div>
           <div class="form-group"><label class="small mb-1" for="inputEmailAddress">Email</label>
-           <input name="email-address" class="form-control py-4" id="inputEmailAddress" type="email" aria-describedby="emailHelp" placeholder="Enter email address" required="true" />
+           <input name="email-address" class="form-control py-4" id="inputEmailAddress" type="email" aria-describedby="emailHelp" placeholder="Entrer une adresse email" required="true" />
           </div>
           <div class="form-row">
            <div class="col-md-6">
-            <div class="form-group"><label class="small mb-1" for="inputPassword">Password</label>
-             <input name="password" class="form-control py-4" id="inputPassword" type="password" placeholder="Enter password" required="true" />
+            <div class="form-group"><label class="small mb-1" for="inputPassword">Mot de passe</label>
+             <input name="password" class="form-control py-4" id="inputPassword" type="password" placeholder="*******" required="true" />
             </div>
            </div>
            <div class="col-md-6">
-            <div class="form-group"><label class="small mb-1" for="inputConfirmPassword">Confirm Password</label>
-             <input name="confirm-password" class="form-control py-4" id="inputConfirmPassword" type="password" placeholder="Confirm password" required="true" />
+            <div class="form-group"><label class="small mb-1" for="inputConfirmPassword">Confirmer le mot de passe</label>
+             <input name="confirm-password" class="form-control py-4" id="inputConfirmPassword" type="password" placeholder="*******" required="true" />
             </div>
            </div>
           </div>
           <div class="form-group mt-4 mb-0">
-           <button name="submit" class="btn btn-primary btn-block" type="submit">Create Account</button>
+           <button name="submit" class="btn btn-primary btn-block" type="submit">Créer un compte</button>
           </div>
          </form>
         </div>
         <div class="card-footer text-center">
          <div class="small">
-          <a href="signin.php">Have an account? Go to signin</a>
+          <a href="signin.php">Vous avez un compte? Connectez-vous !</a>
          </div>
         </div>
        </div>

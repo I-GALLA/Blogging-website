@@ -59,7 +59,7 @@
      <div class="container text-center">
       <div class="row justify-content-center">
        <div class="col-lg-8">
-        <h1 class="page-header-title mb-3">Résultat de recherche de <?php echo $keyword; ?></h1>
+        <h1 class="page-header-title mb-3">Résultat de recherche de " <?php echo $keyword; ?> "</h1>
         <p class="page-header-text">Nb résultats trouvés: <?php echo $post_found; ?></p>
        </div>
       </div>

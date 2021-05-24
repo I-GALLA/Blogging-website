@@ -14,7 +14,7 @@ if (isset($_SESSION['login']) || isset($_COOKIE['_uid_']) || isset($_COOKIE['_ui
  <meta charset="utf-8" />
  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
- <title>SIGN IN || Admin Panel</title>
+ <title>Connexion</title>
  <link href="css/styles.css" rel="stylesheet" />
  <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
  <script data-search-pseudo-elements defer src="js/all.min.js"></script>
@@ -76,7 +76,7 @@ if (isset($_SESSION['login']) || isset($_COOKIE['_uid_']) || isset($_COOKIE['_ui
 
        <div class="card shadow-lg border-0 rounded-lg mt-5">
         <div class="card-header justify-content-center">
-         <h3 class="font-weight-light my-4">SIGN IN</h3>
+         <h3 class="font-weight-light my-4">Connexion</h3>
         </div>
         <div class="card-body">
          <?php
@@ -92,28 +92,28 @@ if (isset($_SESSION['login']) || isset($_COOKIE['_uid_']) || isset($_COOKIE['_ui
          <form action="signin.php" method="POST">
           <div class="form-group">
            <label class="small mb-1" for="inputEmailAddress">Email</label>
-           <input name="email" class="form-control py-4" id="inputEmailAddress" type="email" placeholder="Enter email address" />
+           <input name="email" class="form-control py-4" id="inputEmailAddress" type="email" placeholder="exemple@exemple.com" />
           </div>
           <div class="form-group">
-           <label class="small mb-1" for="inputPassword">Password</label>
-           <input name="password" class="form-control py-4" id="inputPassword" type="password" placeholder="Enter password" />
+           <label class="small mb-1" for="inputPassword">Mot de passe</label>
+           <input name="password" class="form-control py-4" id="inputPassword" type="password" placeholder="********" />
           </div>
           <div class="form-group">
            <div class="custom-control custom-checkbox">
             <input name="check" class="custom-control-input" id="rememberPasswordCheck" type="checkbox" />
-            <label class="custom-control-label" for="rememberPasswordCheck">Remember password</label>
+            <label class="custom-control-label" for="rememberPasswordCheck">Rester connecté(e) sur cet appareil</label>
            </div>
           </div>
           <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
            <a class="small" href="#"></a>
-           <button name="submit" class="btn btn-primary btn-block" type="submit">SIGN IN</button>
+           <button name="submit" class="btn btn-primary btn-block" type="submit">Connexion</button>
           </div>
          </form>
         </div>
         <div class="card-footer text-center">
          <div class="small">
-          <a href="signup.php">Need an account? Sign up!</a> <br>
-          <a href="forgot-password.php">Forgot password</a>
+          <a href="signup.php">Rejoigner nous? Créer un compte!</a> <br>
+          <a href="forgot-password.php">Mot de passe oublié</a>
          </div>
         </div>
        </div>

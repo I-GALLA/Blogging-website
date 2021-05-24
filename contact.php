@@ -1,4 +1,4 @@
-<?php $current_page = "Contact us"; ?>
+<?php $current_page = "Contact"; ?>
 <?php require_once("./includes/header.php"); ?>
 
 <div id="layoutDefault">

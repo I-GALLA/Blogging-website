@@ -6,7 +6,7 @@
  <meta charset="utf-8" />
  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
- <title>Password recovery || Admin Panel</title>
+ <title>Mot de passe oublié ?</title>
  <link href="css/styles.css" rel="stylesheet" />
  <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
  <script data-search-pseudo-elements defer src="js/all.min.js"></script>
@@ -22,7 +22,7 @@
       <div class="col-lg-5">
        <div class="card shadow-lg border-0 rounded-lg mt-5">
         <div class="card-header justify-content-center">
-         <h3 class="font-weight-light my-4">Password Recovery</h3>
+         <h3 class="font-weight-light my-4">Réinitialisez votre mot de passe</h3>
         </div>
         <div class="card-body">
          <?php
@@ -69,31 +69,31 @@
          if (!isset($show)) { ?>
           <form action="forgot-password.php" method="POST">
            <div class="form-group">
-            <label class="small mb-1" for="Nickname">Nickname</label>
-            <input name="nickname" class="form-control py-4" id="Nickname" type="text" placeholder="Enter Nickname..." />
+            <label class="small mb-1" for="Nickname">Pseudo</label>
+            <input name="nickname" class="form-control py-4" id="Nickname" type="text" placeholder="Pseudo..." />
            </div>
            <div class="form-group">
             <label class="small mb-1" for="inputEmailAddress">Email</label>
-            <input name="email" class="form-control py-4" id="inputEmailAddress" type="email" aria-describedby="emailHelp" placeholder="Enter email address..." />
+            <input name="email" class="form-control py-4" id="inputEmailAddress" type="email" aria-describedby="emailHelp" placeholder="email@exemple.com" />
            </div>
            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-            <a class="small" href="signin.php">Return to signin</a>
-            <button name="reset" class="btn btn-primary" type="submit">Reset Password</button>
+            <a class="small" href="signin.php">Retour à la page de connexion</a>
+            <button name="reset" class="btn btn-primary" type="submit">Réinitialisez le mot de passe</button>
            </div>
           </form>
          <?php } else { ?>
           <form action="forgot-password.php" method="POST">
            <div class="form-group">
             <input name="id" value="<?php echo $user_id; ?>" type="hidden" />
-            <label class="small mb-1" for="passowrd">Passowrd</label>
-            <input name="password" class="form-control py-4" id="passowrd" type="password" placeholder="Password" required="true" />
+            <label class="small mb-1" for="passowrd">Nouveau mot de passe</label>
+            <input name="password" class="form-control py-4" id="passowrd" type="password" placeholder="******" required="true" />
            </div>
            <div class="form-group">
-            <label class="small mb-1" for="confirmpassword">Confirm Password</label>
-            <input name="confirm-password" class="form-control py-4" type="password" placeholder="Confirm password" required="true" />
+            <label class="small mb-1" for="confirmpassword">Confirmer le mot de passe</label>
+            <input name="confirm-password" class="form-control py-4" type="password" placeholder="******" required="true" />
            </div>
            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-            <button name="update" class="btn btn-primary" type="submit">Update Password</button>
+            <button name="update" class="btn btn-primary" type="submit">Réinitialiser</button>
            </div>
           </form>
          <?php }
@@ -101,7 +101,7 @@
 
         </div>
         <div class="card-footer text-center">
-         <div class="small"><a href="signup.php">Need an account? Sign up!</a></div>
+         <div class="small"><a href="signup.php">Rejoignez-nous ? Créer un compte!</a></div>
         </div>
        </div>
       </div>
