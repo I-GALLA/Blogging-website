@@ -13,14 +13,14 @@
      </button>
      <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto mr-lg-5">
-       <li class="nav-item">
+       <!-- <li class="nav-item">
         <a class="nav-link" href="index.php">Home </a>
-       </li>
+       </li> -->
        <li class="nav-item dropdown no-caret">
         <a class="nav-link" href="contact.php">Contact</a>
        </li>
        <li class="nav-item dropdown no-caret">
-        <a class="nav-link" href="about.php">About</a>
+        <a class="nav-link" href="about.php">Qui sommes-nous ?</a>
        </li>
       </ul>
 
@@ -39,17 +39,17 @@
       <div class="row justify-content-center">
        <div class="col-xl-8 col-lg-10 text-center">
 
-        <h1 class="page-header-title">Welcome to AMDI BLOG</h1>
-        <p class="page-header-text mb-5">Are you searching for some content that you haven't found yet? Try searching in the search box below!</p>
+        <h1 class="page-header-title">Bienvenue sur AMDI BLOG</h1>
+        <p class="page-header-text mb-5">Recherchez-vous du contenu que vous n'avez pas encore trouvé? <br> Essayez de chercher dans le champ de recherche ci-dessous!</p>
         <form class="page-header-signup mb-2 mb-md-0" action="search.php" method="POST">
          <div class="form-row justify-content-center">
           <div class="col-lg-6 col-md-8">
            <div class="form-group mr-0 mr-lg-2">
-            <input name="search-keyword" class="form-control form-control-solid rounded-pill" type="text" placeholder="Search keyword..." />
+            <input name="search-keyword" class="form-control form-control-solid rounded-pill" type="text" placeholder="Recherche..." />
            </div>
           </div>
           <div class="col-lg-3 col-md-4">
-           <button class="btn btn-teal btn-block btn-marketing rounded-pill" type="submit">Search</button>
+           <button class="btn btn-teal btn-block btn-marketing rounded-pill" type="submit">Rechercher</button>
           </div>
          </div>
         </form>
@@ -95,7 +95,7 @@
    <section class="bg-white py-10">
     <!--Start-->
     <div class="container">
-     <h1>Most popular post:</h1>
+     <h1>Article le plus populaire:</h1>
      <hr />
      <?php
      $sql4 = "SELECT * FROM posts WHERE post_status = :status ORDER BY post_views DESC LIMIT 0, 1";
@@ -158,7 +158,7 @@
      }
      $total_pager = ceil($post_count / $post_per_page);
      ?>
-     <h1>Recent posting:</h1>
+     <h1>Publication récente:</h1>
      <hr />
      <div class="row">
       <?php
@@ -255,7 +255,7 @@
      <?php }
      ?>
 
-     <h1 class="pt-5">Most viewed posts:</h1>
+     <h1 class="pt-5">Articles les plus consultés:</h1>
      <hr />
      <div class="row">
       <?php
@@ -299,7 +299,7 @@
 
      </div>
 
-     <h1 class="pt-5">Browse by categories:</h1>
+     <h1 class="pt-5">Parcourir par catégories:</h1>
      <hr />
      <div class="row features text-center mb-5">
       <?php

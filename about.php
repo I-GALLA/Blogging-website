@@ -1,5 +1,6 @@
-<?php $current_page = "À propos"; ?>
+<?php $current_page = "About us"; ?>
 <?php require_once("./includes/header.php"); ?>
+
 <div id="layoutDefault">
  <div id="layoutDefault_content">
   <main>
@@ -9,18 +10,20 @@
      <a class="navbar-brand text-dark" href="index.php">AMDI BLOG</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><img src="img/menu.png" style="height:20px;width:25px" /><i data-feather="menu"></i></button>
      <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto mr-lg-5">
-       <li class="nav-item">
+       <!-- <li class="nav-item">
         <a class="nav-link" href="index.php">Home </a>
-       </li>
+       </li> -->
        <li class="nav-item dropdown no-caret">
         <a class="nav-link" href="contact.php">Contact</a>
        </li>
        <li class="nav-item dropdown no-caret">
-        <a class="nav-link" href="about.php">About</a>
+        <a class="nav-link" href="about.php">Qui sommes-nous ?</a>
        </li>
       </ul>
-      <a class="btn-teal btn rounded-pill px-4 ml-lg-4" href="backend/signin.php">Sign in<i class="fas fa-arrow-right ml-1"></i></a>
-      <a class="btn-teal btn rounded-pill px-4 ml-lg-4" href="backend/signup.php">Sign up<i class="fas fa-arrow-right ml-1"></i></a>
+      <?php
+      $curr_page = basename(__FILE__);
+      require_once("./includes/registration.php");
+      ?>
      </div>
     </div>
    </nav>
@@ -30,7 +33,7 @@
      <div class="container text-center">
       <div class="row justify-content-center">
        <div class="col-lg-8">
-        <h1 class="page-header-title mb-3">À propos <!--Qui sommes-nous--></h1>
+        <h1 class="page-header-title mb-3">À propos</h1>
        </div>
       </div>
      </div>
@@ -42,7 +45,7 @@
    </header>
    <section class="bg-white py-10">
     <div class="container">
-     <div>
+    <div>
       <h1>Pourquoi un blog ?</h1>
       <p class="lead">Notre motivation n’est autre que de vous informer et de susciter votre réaction !</p>
       <p>Bienvenue sur le Blog, où nous partageons le résultat de nos lectures sous la forme d’articles d’actualité, de synthèses sur des problématiques données ou de réflexions. Ce blog nous permet de parler de notre veille personnelle autour des nouvelles technologies, des services innovants, des réseaux sociaux et du buzz marketing …</p>
@@ -64,7 +67,7 @@
     <div class="row align-items-center">
      <div class="col-md-6 small">Copyright &#xA9; AMDI4 2021</div>
      <div class="col-md-6 text-md-right small">
-     <a href="privacy-policy.php">Mentions légales</a>
+      <a href="privacy-policy.php">Mentions Légales</a>
       &#xB7;
       <a href="CGU.php">CGU</a>
      </div>

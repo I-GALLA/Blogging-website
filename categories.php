@@ -10,14 +10,14 @@
      <a class="navbar-brand text-dark" href="index.php">AMDI BLOG</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><img src="img/menu.png" style="height:20px;width:25px" /><i data-feather="menu"></i></button>
      <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto mr-lg-5">
-       <li class="nav-item">
+       <!-- <li class="nav-item">
         <a class="nav-link" href="index.php">Home </a>
-       </li>
+       </li> -->
        <li class="nav-item dropdown no-caret">
         <a class="nav-link" href="contact.php">Contact</a>
        </li>
        <li class="nav-item dropdown no-caret">
-        <a class="nav-link" href="about.php">About</a>
+        <a class="nav-link" href="about.php">Qui sommes-nous ?</a>
        </li>
       </ul>
       <?php
@@ -34,17 +34,17 @@
       <div class="row justify-content-center">
        <div class="col-xl-8 col-lg-10 text-center">
 
-        <h1 class="page-header-title">Welcome to <?php echo $_GET['category_name']; ?> Category</h1>
-        <p class="page-header-text mb-5">Are you searching for some content that you haven't found yet? Try searching in the search box below!</p>
+        <h1 class="page-header-title">Catégorie <?php echo $_GET['category_name']; ?> </h1>
+        <p class="page-header-text mb-5">Recherchez-vous du contenu que vous n'avez pas encore trouvé? <br> Essayez de chercher dans le champ de recherche ci-dessous!</p>
         <form class="page-header-signup mb-2 mb-md-0" action="category-search.php" method="POST">
          <div class="form-row justify-content-center">
           <div class="col-lg-6 col-md-8">
            <div class="form-group mr-0 mr-lg-2">
-            <input name="search-keyword" class="form-control form-control-solid rounded-pill" type="text" placeholder="Search keyword..." />
+            <input name="search-keyword" class="form-control form-control-solid rounded-pill" type="text" placeholder="Recherche..." />
             <input name="category-id" value="<?php echo $_GET['category_id']; ?>" type="hidden" />
            </div>
           </div>
-          <div class="col-lg-3 col-md-4"><button class="btn btn-teal btn-block btn-marketing rounded-pill" type="submit">Search</button></div>
+          <div class="col-lg-3 col-md-4"><button class="btn btn-teal btn-block btn-marketing rounded-pill" type="submit">Rechercher</button></div>
          </div>
         </form>
 
@@ -92,7 +92,7 @@
    <section class="bg-white py-10">
     <!--Start-->
     <div class="container">
-     <h1>Most popular post:</h1>
+     <h1>Article le plus populaire:</h1>
      <hr />
      <?php
      $sql4 = "SELECT * FROM posts WHERE post_status = :status AND post_category_id = :id ORDER BY post_views DESC LIMIT 0, 1";
@@ -158,7 +158,7 @@
      $total_pager = ceil($post_count / $post_per_page);
      ?>
 
-     <h1>Recent posting:</h1>
+     <h1>Publication récente:</h1>
      <hr />
      <div class="row">
       <?php
@@ -256,7 +256,7 @@
      ?>
 
 
-     <h1 class="pt-5">Most viewed posts:</h1>
+     <h1 class="pt-5">Articles les plus consultés:</h1>
      <hr />
      <div class="row">
       <?php

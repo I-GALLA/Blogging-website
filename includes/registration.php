@@ -40,8 +40,8 @@ if (isset($_SESSION['login'])) {
  </form>
  <?php } else {
  if (!isset($_COOKIE['_uid_']) && !isset($_COOKIE['_uiid_'])) {
-  echo '<a class="btn-teal btn rounded-pill px-4 ml-lg-4" href="backend/signin.php">Sign in</a>';
-  echo '<a class="btn-teal btn rounded-pill px-4 ml-lg-4" href="backend/signup.php">Sign up</a>';
+  echo '<a class="btn-teal btn rounded-pill px-4 ml-lg-4" href="backend/signin.php">Connexion</a>';
+  echo '<a class="btn-teal btn rounded-pill px-4 ml-lg-4" href="backend/signup.php">Créer un compte</a>';
  } else {
   $user_id = base64_decode($_COOKIE['_uid_']);
   $user_nickname = base64_decode($_COOKIE['_uiid_']);

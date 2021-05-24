@@ -56,7 +56,6 @@
            $ms_useremail = $ms['ms_useremail'];
            $ms_detail = substr($ms['ms_detail'], 0, 20);
            $ms_status = $ms['ms_status'];
-           $ms_date = $ms['ms_date'];
            $ms_state = $ms['ms_state']; ?>
            <tr>
             <td><?php echo $ms_id; ?></td>
@@ -67,7 +66,7 @@
              <?php echo $ms_useremail; ?>
             </td>
             <td><?php echo $ms_detail; ?></td>
-            <td><?php echo $ms_date; ?></td>
+            <td>17 Nov 2020</td>
             <td>
              <div class="badge badge-<?php echo $ms_status == "pending" ? "warning" : "success"; ?>">
               <?php echo $ms_status; ?>

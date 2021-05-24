@@ -108,7 +108,7 @@
      <!--Card Primary-->
 
      <div class="card mb-4">
-      <div class="card-header">Most Popular Posts:</div>
+      <div class="card-header">Articles les plus populaires:</div>
       <div class="card-body">
        <div class="datatable table-responsive">
         <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">

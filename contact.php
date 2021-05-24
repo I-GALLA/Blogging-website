@@ -10,14 +10,14 @@
      <a class="navbar-brand text-dark" href="index.php">AMDI BLOG</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><img src="./img/menu.png" style="height:20px;width:25px" /><i data-feather="menu"></i></button>
      <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto mr-lg-5">
-       <li class="nav-item">
+       <!-- <li class="nav-item">
         <a class="nav-link" href="index.php">Home </a>
-       </li>
+       </li> -->
        <li class="nav-item dropdown no-caret">
         <a class="nav-link" href="contact.php">Contact</a>
        </li>
        <li class="nav-item dropdown no-caret">
-        <a class="nav-link" href="about.php">About</a>
+        <a class="nav-link" href="about.php">Qui sommes-nous ?</a>
        </li>
       </ul>
       <?php
@@ -33,8 +33,8 @@
      <div class="container text-center">
       <div class="row justify-content-center">
        <div class="col-lg-8">
-        <h1 class="page-header-title mb-3">Contact Us</h1>
-        <p class="page-header-text">We will back to you in a week!</p>
+        <h1 class="page-header-title mb-3">Contactez-nous</h1>
+        <p class="page-header-text">Nous reviendrons vers vous dans une semaine!</p>
        </div>
       </div>
      </div>
@@ -82,7 +82,7 @@
        ?>
        <div class="form-row">
         <div class="form-group col-md-6">
-         <label class="text-dark" for="inputName">Full name</label>
+         <label class="text-dark" for="inputName">Nom complet</label>
          <input value="<?php echo $user_name; ?>" readonly="true" class="form-control py-4" id="inputName" type="text" placeholder="Full name" />
         </div>
         <div class="form-group col-md-6">
@@ -95,7 +95,7 @@
         <textarea name="message" class="form-control py-3" id="inputMessage" type="text" placeholder="Enter your message..." rows="4"></textarea>
        </div>
        <div class="text-center">
-        <button name="send" class="btn btn-primary btn-marketing mt-4" type="submit">Submit Request</button>
+        <button name="send" class="btn btn-primary btn-marketing mt-4" type="submit">Envoyer</button>
        </div>
       </form>
 
@@ -104,8 +104,8 @@
       <table class="table table-bordered table-hover mt-5" id="dataTable" width="100%" cellspacing="0">
        <thead>
         <tr>
-         <th>Your messages:</th>
-         <th>Answers:</th>
+         <th>Vos messages:</th>
+         <th>Réponses:</th>
         </tr>
        </thead>
        <tbody>
@@ -129,7 +129,7 @@
 
 
      <?php } else { ?>
-      <a href="./backend/sign-in.php">Sign in to contact us!</a>
+      <a href="./backend/signin.php">Connectez-vous pour nous contacter !</a>
      <?php }
      ?>
 
