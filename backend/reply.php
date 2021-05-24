@@ -16,7 +16,7 @@
   <?php
   if (isset($_POST['response'])) {
    $id = $_POST['id'];
-   $url = "./backend/reply.php?id=" . $id;
+   $url = "./reply.php?id=" . $id;
    header("Location: {$url}");
   }
   ?>

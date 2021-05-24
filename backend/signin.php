@@ -3,7 +3,7 @@
 
 <?php
 if (isset($_SESSION['login']) || isset($_COOKIE['_uid_']) || isset($_COOKIE['_uiid_'])) {
- header("Location: ../index.php");
+ header("Location: ./index.php");
 }
 ?>
 
@@ -66,7 +66,7 @@ if (isset($_SESSION['login']) || isset($_COOKIE['_uid_']) || isset($_COOKIE['_ui
           $_SESSION['user_nickname'] = $user['user_nickname'];
           $_SESSION['user_role'] = $user_role;
           $_SESSION['login'] = 'success';
-          header("Refresh:2;url=../index.php");
+          header("Refresh:2;url=./index.php");
          } else {
           $error_password = "Wrong password!";
          }
