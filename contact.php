@@ -75,9 +75,10 @@
          ':username' => $user_name,
          ':email' => $user_email,
          ':detail' => $message,
-         ':date' => date("M n, Y") . ' at ' . date("h:i A")
+         ':date' => date("M n, Y") . ' à ' . date("h:i A")
         ]);
         echo "<p class='alert alert-success'>Message has been send successfully!</p>";
+        header("Location: contact.php");
        }
        ?>
        <div class="form-row">
