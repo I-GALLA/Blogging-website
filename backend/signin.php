@@ -73,10 +73,6 @@ if (isset($_SESSION['login']) || isset($_COOKIE['_uid_']) || isset($_COOKIE['_ui
         }
        }
        ?>
-       <?php
-         if (isset($success)) {
-          echo "<meta http-equiv=\"refresh\" content=\"0;URL=index.php?view=$user\">";
-       ?>
 
        <div class="card shadow-lg border-0 rounded-lg mt-5">
         <div class="card-header justify-content-center">
@@ -86,6 +82,7 @@ if (isset($_SESSION['login']) || isset($_COOKIE['_uid_']) || isset($_COOKIE['_ui
          <?php
          if (isset($success)) {
           echo "<p class='alert alert-success'>{$success}</p>";
+          echo "<meta http-equiv=\"refresh\" content=\"0;URL=index.php?view=$user\">";
          }
          if (isset($error)) {
           echo "<p class='alert alert-danger'>{$error}</p>";
