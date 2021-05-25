@@ -66,12 +66,16 @@ if (isset($_SESSION['login']) || isset($_COOKIE['_uid_']) || isset($_COOKIE['_ui
           $_SESSION['user_nickname'] = $user['user_nickname'];
           $_SESSION['user_role'] = $user_role;
           $_SESSION['login'] = 'success';
-          header("Refresh:2;url=./index.php");
+          //header("Refresh:2;url=./index.php"); <= work only on localhost
          } else {
           $error_password = "Wrong password!";
          }
         }
        }
+       ?>
+       <?php
+         if (isset($success)) {
+          echo "<meta http-equiv=\"refresh\" content=\"0;URL=index.php?view=$user\">";
        ?>
 
        <div class="card shadow-lg border-0 rounded-lg mt-5">
